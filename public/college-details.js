@@ -158,14 +158,19 @@ function renderCategoryTable(college) {
         const tr = document.createElement("tr");
         
         tr.innerHTML = `
-            <td style="font-weight: 600; color: #fff;">${cat.name}</td>
-            <td style="text-align: right; font-family: monospace;">₹${tuition.toLocaleString()}</td>
-            <td style="text-align: right; font-family: monospace;">₹${development.toLocaleString()}</td>
+            <td style="font-weight: 600; color: #fff;">
+                ${cat.name}
+                <div class="mobile-only" style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal; margin-top: 0.25rem; font-family: monospace;">
+                    Tuition: ₹${tuition.toLocaleString()} | Dev: ₹${development.toLocaleString()}
+                </div>
+            </td>
+            <td class="mobile-hidden" style="text-align: right; font-family: monospace;">₹${tuition.toLocaleString()}</td>
+            <td class="mobile-hidden" style="text-align: right; font-family: monospace;">₹${development.toLocaleString()}</td>
             <td style="text-align: right; font-weight: 700; color: #fff; font-family: monospace; background-color: rgba(255, 255, 255, 0.01);">₹${total.toLocaleString()}</td>
             <td style="text-align: center;">
                 <span class="concession-badge ${badgeClass}">${badgeText}</span>
             </td>
-            <td>
+            <td class="mobile-hidden">
                 <div style="font-size: 0.85rem; font-weight: 500; color: #fff;">${cat.scheme}</div>
                 <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;">${cat.criteria}</div>
             </td>

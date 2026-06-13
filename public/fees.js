@@ -83,10 +83,10 @@ function renderTableRows(items) {
         const row = document.createElement("tr");
         
         row.innerHTML = `
-            <td><span style="color: var(--text-muted); font-size: 0.85rem;">#${idx + 1}</span></td>
+            <td class="mobile-hidden"><span style="color: var(--text-muted); font-size: 0.85rem;">#${idx + 1}</span></td>
             <td><code>${item.college_code}</code></td>
             <td style="font-weight: 500; color: #fff;">${item.college_name}</td>
-            <td><span class="concession-badge open" style="font-size: 0.75rem;">${item.type}</span></td>
+            <td class="mobile-hidden"><span class="concession-badge open" style="font-size: 0.75rem;">${item.type}</span></td>
         `;
         
         row.addEventListener("click", () => {

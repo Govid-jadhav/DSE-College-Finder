@@ -177,8 +177,8 @@ async function fetchOverviewStats() {
         
         const tr = document.createElement("tr");
         tr.innerHTML = `
-            <td><strong>#${idx + 1}</strong></td>
-            <td><code>${item._id}</code></td>
+            <td class="mobile-hidden"><strong>#${idx + 1}</strong></td>
+            <td class="mobile-hidden"><code>${item._id}</code></td>
             <td style="color: #fff; font-weight: 500;">${collegeName}</td>
             <td style="text-align: center; font-weight: 700; color: var(--primary-hover);">${item.count} bookmarks</td>
         `;
@@ -392,8 +392,8 @@ async function fetchAllReviews() {
         }
         
         tr.innerHTML = `
-            <td><span style="font-size: 0.8rem; color: var(--text-muted);">${dateStr}</span></td>
-            <td style="font-weight: 600; color: #fff;">${item.username}</td>
+            <td class="mobile-hidden"><span style="font-size: 0.8rem; color: var(--text-muted);">${dateStr}</span></td>
+            <td class="mobile-hidden" style="font-weight: 600; color: #fff;">${item.username}</td>
             <td><div style="display: flex; gap: 0.1rem;">${starsHTML}</div></td>
             <td style="color: var(--text-muted); max-width: 400px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${item.comment}">${item.comment}</td>
             <td style="text-align: center;">
@@ -451,10 +451,10 @@ async function fetchAllUsers() {
         const tr = document.createElement("tr");
         
         tr.innerHTML = `
-            <td><code>${item._id}</code></td>
+            <td class="mobile-hidden"><code>${item._id}</code></td>
             <td style="font-weight: 500; color: #fff;">${item.username}</td>
             <td>${item.email}</td>
-            <td>
+            <td class="mobile-hidden">
                 <span class="concession-badge ${item.role === 'admin' ? 'obc-ews' : 'open'}">${item.role}</span>
             </td>
             <td style="text-align: center;">
@@ -532,11 +532,11 @@ function renderFeesTab() {
     filtered.forEach(item => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
-            <td><code>${item.college_code}</code></td>
+            <td class="mobile-hidden"><code>${item.college_code}</code></td>
             <td style="font-weight: 500; color: #fff;">${item.college_name}</td>
-            <td><span style="font-size: 0.85rem; color: var(--text-muted);">${item.type}</span></td>
-            <td style="text-align: right; font-family: monospace;">₹${item.tuition_fee.toLocaleString()}</td>
-            <td style="text-align: right; font-family: monospace;">₹${item.development_fee.toLocaleString()}</td>
+            <td class="mobile-hidden"><span style="font-size: 0.85rem; color: var(--text-muted);">${item.type}</span></td>
+            <td class="mobile-hidden" style="text-align: right; font-family: monospace;">₹${item.tuition_fee.toLocaleString()}</td>
+            <td class="mobile-hidden" style="text-align: right; font-family: monospace;">₹${item.development_fee.toLocaleString()}</td>
             <td style="text-align: right; font-weight: 600; color: #fff; font-family: monospace;">₹${item.total_fee.toLocaleString()}</td>
             <td style="text-align: center;">
                 <button onclick="openEditModal('${item.college_code}')" class="btn btn-secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem; margin: 0 auto; display: flex; align-items: center; gap: 0.3rem;">
