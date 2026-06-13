@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSE 2025 Maharashtra College Predictor & Recommender</title>
+    <meta name="description" content="Find the best Engineering colleges in Maharashtra for Direct Second Year (DSE) admission based on your diploma percentage, branch, and category.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="glass-bg-glow"></div>
+    
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand">
+                <div class="logo-glow">
+                    <i data-lucide="graduation-cap"></i>
+                </div>
+                <div>
+                    <h1>DSE College Finder</h1>
+                    <p class="subtitle">Direct Second Year Engineering Predictor 2025-26</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="view-shortlist-btn" class="btn btn-secondary" aria-label="View Shortlist">
+                    <i data-lucide="bookmark"></i>
+                    <span>Shortlist</span>
+                    <span id="shortlist-badge" class="badge">0</span>
+                </button>
+                
+                <a href="/fees" class="btn btn-secondary" style="text-decoration: none;">
+                    <i data-lucide="indian-rupee"></i>
+                    <span>College Fees</span>
+                </a>
+                
+                <a href="#reviews-section" class="btn btn-secondary" style="text-decoration: none;">
+                    <i data-lucide="message-square"></i>
+                    <span>Reviews</span>
+                </a>
+                
+                <!-- User Area Menu -->
+                <div id="user-header-menu" class="user-header-menu">
+                    <button id="header-signin-btn" class="btn btn-primary">
+                        <i data-lucide="user"></i>
+                        <span>Sign In</span>
+                    </button>
+                    <div id="header-profile-dropdown" class="header-profile-dropdown hidden">
+                        <button id="profile-trigger-btn" class="profile-trigger">
+                            <span class="user-avatar-initials" id="user-avatar">U</span>
+                            <span class="username-display" id="user-display">Student</span>
+                            <i data-lucide="chevron-down" class="dropdown-chevron"></i>
+                        </button>
+                        <ul class="dropdown-menu-list">
+                            <li id="sync-shortlist-status" class="dropdown-status-info">
+                                <i data-lucide="cloud-lightning"></i>
+                                <span>Guest Session</span>
+                            </li>
+                            <li>
+                                <button id="header-signout-btn" class="dropdown-item">
+                                    <i data-lucide="log-out"></i>
+                                    <span>Sign Out</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="app-main">
+        <!-- Hero Section -->
+        <section class="hero-section" aria-labelledby="hero-title">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i data-lucide="sparkles"></i>
+                    <span>Latest AY 2025-26, 2024-25 & 2023-24 Cutoffs Loaded</span>
+                </div>
+                <h1 id="hero-title">Predict Your Perfect Direct Second Year College</h1>
+                <p class="hero-subtitle">Enter your aggregate diploma score, select your category, and instantly find the most realistic matching engineering colleges in Maharashtra across CAP rounds.</p>
+                <div class="hero-actions-container">
+                    <a href="#predictor-form-section" id="get-started-btn" class="btn btn-primary btn-lg">
+                        <span>Get Started Now</span>
+                        <i data-lucide="arrow-down"></i>
+                    </a>
+                    <a href="#features-section" class="btn btn-secondary btn-lg">
+                        <span>Explore Features</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero-stats">
+                <div class="hero-stat-item">
+                    <span class="stat-num" data-write="2,145+">2,145+</span>
+                    <span class="stat-lbl">Choice Codes</span>
+                </div>
+                <div class="hero-stat-item">
+                    <span class="stat-num" data-write="7">7</span>
+                    <span class="stat-lbl">Cutoff Sheets Ingested</span>
+                </div>
+                <div class="hero-stat-item">
+                    <span class="stat-num" data-write="3">3</span>
+                    <span class="stat-lbl">Historical Years</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features-section" class="features-section" aria-labelledby="features-title">
+            <h2 id="features-title" class="section-title">Smart Features Built For You</h2>
+            <div class="features-grid">
+                <div class="feature-card Card">
+                    <div class="feature-icon"><i data-lucide="sparkles"></i></div>
+                    <h3>Precision Matcher</h3>
+                    <p>Classifies options into Dream, Match, and Safe categories based on your diploma percentage score.</p>
+                </div>
+                <div class="feature-card Card">
+                    <div class="feature-icon"><i data-lucide="trending-up"></i></div>
+                    <h3>Multi-Year Trends</h3>
+                    <p>Track cutoff movements across consecutive rounds and academic years on each card.</p>
+                </div>
+                <div class="feature-card Card">
+                    <div class="feature-icon"><i data-lucide="printer"></i></div>
+                    <h3>Shortlist & Option Helper</h3>
+                    <p>Assemble your favorite choices and print a custom layout helper for official choice entries.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Input Form Section -->
+        <section id="predictor-form-section" class="predictor-section Card" aria-labelledby="form-title">
+            <h2 id="form-title" class="visually-hidden">Predictor Options</h2>
+            <form id="predictor-form" class="predictor-form">
+                <div class="form-grid">
+                    <!-- Percentage Input -->
+                    <div class="form-group">
+                        <label for="student-percentage">
+                            <i data-lucide="percent" class="input-icon"></i>
+                            Diploma / B.Sc. Percentage
+                        </label>
+                        <input type="number" id="student-percentage" name="percentage" min="45.0" max="100.0" step="0.01" placeholder="e.g. 85.50" required>
+                        <span class="helper-text">Enter your aggregate percentage score (e.g. 84.75)</span>
+                    </div>
+
+                    <!-- Category Selector -->
+                    <div class="form-group">
+                        <label for="seat-category">
+                            <i data-lucide="user-check" class="input-icon"></i>
+                            Admission Category
+                        </label>
+                        <div class="select-wrapper">
+                            <select id="seat-category" name="category" required>
+                                <option value="" disabled selected>Select Category</option>
+                                <!-- Categories will be populated dynamically -->
+                            </select>
+                        </div>
+                        <span class="helper-text">Select your admission seat category</span>
+                    </div>
+
+                    <!-- Academic Year Selector -->
+                    <div class="form-group">
+                        <label for="academic-year">
+                            <i data-lucide="calendar" class="input-icon"></i>
+                            Academic Year
+                        </label>
+                        <div class="select-wrapper">
+                            <select id="academic-year" name="year" required>
+                                <option value="2025-26" selected>2025-26 (Latest)</option>
+                                <option value="2024-25">2024-25</option>
+                                <option value="2023-24">2023-24</option>
+                            </select>
+                        </div>
+                        <span class="helper-text">Select cutoff year for prediction</span>
+                    </div>
+
+                    <!-- CAP Round Selector -->
+                    <div class="form-group">
+                        <label for="cap-round">
+                            <i data-lucide="layers" class="input-icon"></i>
+                            CAP Admission Round
+                        </label>
+                        <div class="select-wrapper">
+                            <select id="cap-round" name="round" required>
+                                <option value="1" selected>CAP Round 1</option>
+                                <option value="2">CAP Round 2</option>
+                                <option value="3">CAP Round 3</option>
+                            </select>
+                        </div>
+                        <span class="helper-text">Select which CAP round cutoff to match</span>
+                    </div>
+
+                    <!-- Branch Selector -->
+                    <div class="form-group">
+                        <label for="branch-selector">
+                            <i data-lucide="git-branch" class="input-icon"></i>
+                            Preferred Engineering Branch
+                        </label>
+                        <div class="select-wrapper">
+                            <select id="branch-selector" name="branch">
+                                <option value="ALL">All Branches</option>
+                                <!-- Branches will be populated dynamically -->
+                            </select>
+                        </div>
+                        <span class="helper-text">Filter by a specific engineering branch</span>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" id="predict-btn" class="btn btn-primary">
+                        <i data-lucide="sparkles"></i>
+                        <span>Find Best Colleges</span>
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Loading Screen -->
+        <div id="loader" class="loader-container hidden">
+            <div class="spinner"></div>
+            <p>Analyzing cutoffs and matching colleges...</p>
+        </div>
+
+        <!-- Dashboard / Results Section -->
+        <section id="results-section" class="results-section hidden" aria-labelledby="results-title">
+            <div class="results-header">
+                <h2 id="results-title">Recommendations for You</h2>
+                <div class="results-filters">
+                    <div class="search-box">
+                        <i data-lucide="search"></i>
+                        <input type="text" id="college-search" placeholder="Search by college name, code, or city...">
+                    </div>
+                    <button id="download-results-btn" class="btn btn-secondary" title="Download matching college list as CSV">
+                        <i data-lucide="download"></i>
+                        <span>Download CSV</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Overview Cards -->
+            <div class="stats-grid">
+                <div class="stat-card dream">
+                    <div class="stat-icon"><i data-lucide="flame"></i></div>
+                    <div>
+                        <h3>Dream Options</h3>
+                        <p class="stat-count" id="count-dream">0</p>
+                        <span class="stat-desc">Cutoffs slightly above yours (0-2%)</span>
+                    </div>
+                </div>
+                <div class="stat-card match">
+                    <div class="stat-icon"><i data-lucide="check-circle"></i></div>
+                    <div>
+                        <h3>Realistic Matches</h3>
+                        <p class="stat-count" id="count-match">0</p>
+                        <span class="stat-desc">Highly matching cutoffs (0-5% below)</span>
+                    </div>
+                </div>
+                <div class="stat-card safe">
+                    <div class="stat-icon"><i data-lucide="shield-check"></i></div>
+                    <div>
+                        <h3>Safe Admissions</h3>
+                        <p class="stat-count" id="count-safe">0</p>
+                        <span class="stat-desc">Cutoffs more than 5% below</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recommendation Tabs / Groups -->
+            <div class="recommendations-container">
+                <!-- Group 1: Realistic Matches -->
+                <div class="rec-group" id="group-match-section">
+                    <div class="group-header match">
+                        <i data-lucide="check-circle"></i>
+                        <h3>Realistic Matches (Highly Recommended)</h3>
+                        <span class="group-badge" id="badge-match">0</span>
+                    </div>
+                    <div class="college-grid" id="grid-match">
+                        <!-- Cards injected here -->
+                    </div>
+                </div>
+
+                <!-- Group 2: Dream / Aspiring Options -->
+                <div class="rec-group" id="group-dream-section">
+                    <div class="group-header dream">
+                        <i data-lucide="flame"></i>
+                        <h3>Dream & Aspiring Options (Slightly Risky)</h3>
+                        <span class="group-badge" id="badge-dream">0</span>
+                    </div>
+                    <div class="college-grid" id="grid-dream">
+                        <!-- Cards injected here -->
+                    </div>
+                </div>
+
+                <!-- Group 3: Safe Options -->
+                <div class="rec-group" id="group-safe-section">
+                    <div class="group-header safe">
+                        <i data-lucide="shield-check"></i>
+                        <h3>Safe Admission Options (Backups)</h3>
+                        <span class="group-badge" id="badge-safe">0</span>
+                    </div>
+                    <div class="college-grid" id="grid-safe">
+                        <!-- Cards injected here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div id="no-results-msg" class="no-results-card hidden">
+                <i data-lucide="frown"></i>
+                <h3>No Colleges Found</h3>
+                <p>Try broadening your filters, searching for another branch, or checking your percentage score.</p>
+            </div>
+        </section>
+
+        <!-- Student Reviews Section -->
+        <section id="reviews-section" class="reviews-section Card" aria-labelledby="reviews-title">
+            <div class="reviews-header-block">
+                <h2 id="reviews-title" class="section-title" style="text-align: left; display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem;">
+                    <i data-lucide="message-square" style="color: var(--primary);"></i>
+                    Student Reviews & Feedback
+                </h2>
+                <p class="section-desc" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">Read direct feedback from engineering aspirants or share your own experience using the predictor.</p>
+            </div>
+
+            <div class="reviews-layout">
+                <!-- Write a Review Form Panel (Only for Logged-In Users) -->
+                <div class="write-review-panel Card" style="padding: 1.5rem; background-color: rgba(255, 255, 255, 0.02); height: fit-content;">
+                    <h3 id="review-form-title" style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; color: #fff;">Share Your Experience</h3>
+                    
+                    <!-- Logged-in state form -->
+                    <form id="review-form" class="review-form hidden">
+                        <div class="form-group" style="margin-bottom: 1.25rem;">
+                            <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.5rem; display: block;">Your Rating</label>
+                            <div class="star-rating-input" id="star-rating-input" style="display: flex; gap: 0.4rem;">
+                                <button type="button" class="star-btn" data-value="1" style="background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 0.1rem; transition: var(--transition);"><i data-lucide="star" style="width: 24px; height: 24px; fill: currentColor;"></i></button>
+                                <button type="button" class="star-btn" data-value="2" style="background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 0.1rem; transition: var(--transition);"><i data-lucide="star" style="width: 24px; height: 24px; fill: currentColor;"></i></button>
+                                <button type="button" class="star-btn" data-value="3" style="background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 0.1rem; transition: var(--transition);"><i data-lucide="star" style="width: 24px; height: 24px; fill: currentColor;"></i></button>
+                                <button type="button" class="star-btn" data-value="4" style="background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 0.1rem; transition: var(--transition);"><i data-lucide="star" style="width: 24px; height: 24px; fill: currentColor;"></i></button>
+                                <button type="button" class="star-btn" data-value="5" style="background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 0.1rem; transition: var(--transition);"><i data-lucide="star" style="width: 24px; height: 24px; fill: currentColor;"></i></button>
+                                <input type="hidden" id="selected-rating" name="rating" value="5" required>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 1.25rem;">
+                            <label for="review-comment" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.5rem; display: block;">Your Review</label>
+                            <textarea id="review-comment" name="comment" rows="4" placeholder="Tell us how this tool helped you with your diploma cutoffs and choice code shortlist..." required style="width: 100%; background-color: hsl(223, 47%, 8%); border: 1px solid var(--card-border); color: var(--text-main); padding: 0.75rem; border-radius: var(--radius-md); font-family: var(--font-body); font-size: 0.9rem; outline: none; transition: var(--transition); resize: vertical;"></textarea>
+                        </div>
+                        <div id="review-error-msg" class="auth-error-msg hidden" style="margin-bottom: 1rem;"></div>
+                        <div class="review-form-actions" style="display: flex; gap: 0.75rem; margin-top: 1rem;">
+                            <button type="submit" id="review-submit-btn" class="btn btn-primary" style="flex: 1;">
+                                <span id="review-submit-text">Submit Review</span>
+                                <i data-lucide="send"></i>
+                            </button>
+                            <button type="button" id="review-cancel-btn" class="btn btn-secondary hidden" style="flex: 1;">
+                                <span>Cancel</span>
+                                <i data-lucide="x"></i>
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <!-- Guest state sign-in CTA -->
+                    <div id="review-guest-cta" class="review-guest-cta" style="text-align: center; padding: 1rem 0.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem;">
+                        <i data-lucide="lock" style="width: 36px; height: 36px; color: var(--text-muted);"></i>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.45;">Only signed-in students can write reviews. Sign in or create an account to share your feedback.</p>
+                        <button id="review-signin-btn" class="btn btn-primary" style="width: 100%; margin-top: 0.25rem;">
+                            <i data-lucide="user"></i>
+                            <span>Sign In / Sign Up</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Reviews Display List Grid -->
+                <div class="reviews-list-container">
+                    <div id="reviews-loader" class="reviews-mini-loader" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem; padding: 3rem 1rem;">
+                        <div class="spinner spinner-sm"></div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Loading student reviews...</p>
+                    </div>
+                    <div id="reviews-list" class="reviews-list hidden">
+                        <!-- Dynamic reviews injected here -->
+                    </div>
+                    <div id="empty-reviews-msg" class="empty-reviews-msg hidden" style="text-align: center; padding: 4rem 1rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; color: var(--text-muted);">
+                        <i data-lucide="message-square-dashed" style="width: 44px; height: 44px;"></i>
+                        <p style="font-size: 0.9rem;">No reviews submitted yet. Be the first to share your experience!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Persistence shortlist drawer -->
+    <aside id="shortlist-drawer" class="shortlist-drawer" aria-labelledby="shortlist-title">
+        <div class="drawer-header">
+            <h2 id="shortlist-title">
+                <i data-lucide="bookmark-check"></i>
+                Your Shortlist
+            </h2>
+            <button id="close-drawer-btn" class="icon-btn" aria-label="Close Shortlist">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+        <div class="drawer-content">
+            <p class="drawer-desc">This is your list of favorite options. Use this order when filling out your official CAP Option Form.</p>
+            <div id="shortlist-items" class="shortlist-items-container">
+                <!-- Shortlisted items injected here -->
+                <div class="empty-shortlist">
+                    <i data-lucide="plus-circle"></i>
+                    <p>No colleges shortlisted yet. Click the bookmark icon on college cards to add them here.</p>
+                </div>
+            </div>
+        </div>
+        <div class="drawer-footer">
+            <div class="drawer-actions-row">
+                <button id="clear-shortlist-btn" class="btn btn-secondary">
+                    <i data-lucide="trash-2"></i>
+                    <span>Clear All</span>
+                </button>
+                <button id="print-shortlist-btn" class="btn btn-secondary">
+                    <i data-lucide="printer"></i>
+                    <span>Print</span>
+                </button>
+            </div>
+            <button id="download-shortlist-btn" class="btn btn-primary btn-full-width">
+                <i data-lucide="download"></i>
+                <span>Download Shortlist (CSV)</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Print area helper -->
+    <div id="print-section" class="print-only">
+        <div class="print-header">
+            <h2>DSE 2025 CAP Option Form Preparation Helper</h2>
+            <p>Generated based on Cutoff CAP Round I data. Keep this list handy while filling the choice entry form.</p>
+        </div>
+        <table class="print-table">
+            <thead>
+                <tr>
+                    <th>Preference</th>
+                    <th>College Code</th>
+                    <th>College Name</th>
+                    <th>Choice Code</th>
+                    <th>Course Branch Name</th>
+                    <th>Category Cutoff</th>
+                </tr>
+            </thead>
+            <tbody id="print-table-body">
+                <!-- Print items injected here -->
+            </tbody>
+        </table>
+        <div class="print-footer">
+            <p>Maharashtra State Direct Second Year Admissions 2025-26 Predictor. Developed to assist applicants.</p>
+        </div>
+    </div>
+
+    <footer class="app-footer">
+        <div class="footer-container">
+            <p>&copy; 2025-26 Direct Second Year Engineering Admissions Predictor.</p>
+            <p class="disclaimer">Disclaimer: All cutoff data is sourced from Maharashtra State Common Entrance Test Cell CAP Round I list. Actual cutoffs for 2026 may vary depending on seat matrix and applicant pool.</p>
+        </div>
+    </footer>
+
+    <!-- Authentication Overlay Modal -->
+    <div id="auth-modal" class="auth-modal-overlay hidden">
+        <div class="auth-modal-card Card">
+            <button id="close-auth-modal-btn" class="auth-modal-close icon-btn" aria-label="Close dialog">
+                <i data-lucide="x"></i>
+            </button>
+            
+            <div class="auth-tabs">
+                <button id="login-tab-btn" class="auth-tab active">Sign In</button>
+                <button id="signup-tab-btn" class="auth-tab">Sign Up</button>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="login-form" class="auth-form">
+                <div class="form-group">
+                    <label for="login-email">Email Address</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="mail" class="field-icon"></i>
+                        <input type="email" id="login-email" required placeholder="name@example.com">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="lock" class="field-icon"></i>
+                        <input type="password" id="login-password" required placeholder="Enter password">
+                    </div>
+                </div>
+                <div id="login-error-msg" class="auth-error-msg hidden"></div>
+                <button type="submit" class="btn btn-primary btn-full">
+                    <span>Sign In</span>
+                    <i data-lucide="arrow-right"></i>
+                </button>
+                <button type="button" id="forgot-password-btn" class="btn btn-secondary btn-full" style="margin-top: 0.5rem;">
+                    <i data-lucide="help-circle"></i>
+                    <span>Forgot Password?</span>
+                </button>
+            </form>
+            
+            <!-- Signup Form -->
+            <form id="signup-form" class="auth-form hidden">
+                <div class="form-group">
+                    <label for="signup-username">Full Name</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="user" class="field-icon"></i>
+                        <input type="text" id="signup-username" required placeholder="e.g. Govinda Jadhav">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email Address</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="mail" class="field-icon"></i>
+                        <input type="email" id="signup-email" required placeholder="name@example.com">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="lock" class="field-icon"></i>
+                        <input type="password" id="signup-password" required placeholder="Minimum 6 characters">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="signup-confirm-password">Confirm Password</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="lock" class="field-icon"></i>
+                        <input type="password" id="signup-confirm-password" required placeholder="Verify password">
+                    </div>
+                </div>
+                <div id="signup-error-msg" class="auth-error-msg hidden"></div>
+                <button type="submit" class="btn btn-primary btn-full">
+                    <span>Create Account</span>
+                    <i data-lucide="user-plus"></i>
+                </button>
+            </form>
+            
+            <!-- Forgot Password Request Form (Step 1) -->
+            <form id="forgot-password-form" class="auth-form hidden">
+                <p class="auth-form-desc" style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
+                    Enter your registered email address. A 6-digit verification code will be generated in the server log console.
+                </p>
+                <div class="form-group">
+                    <label for="forgot-email">Email Address</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="mail" class="field-icon"></i>
+                        <input type="email" id="forgot-email" required placeholder="name@example.com">
+                    </div>
+                </div>
+                <div id="forgot-error-msg" class="auth-error-msg hidden"></div>
+                <button type="submit" class="btn btn-primary btn-full">
+                    <span>Send Verification Code</span>
+                    <i data-lucide="send"></i>
+                </button>
+                <div class="form-helper-row" style="text-align: center; margin-top: 0.25rem;">
+                    <a href="#" class="back-to-login-link auth-link-helper" style="font-size: 0.8rem; color: var(--text-link); text-decoration: none;">Back to Sign In</a>
+                </div>
+            </form>
+            
+            <!-- Reset Password Verification Form (Step 2) -->
+            <form id="reset-password-form" class="auth-form hidden">
+                <p class="auth-form-desc" style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
+                    Enter the 6-digit verification code from the console and choose a new password.
+                </p>
+                <div class="form-group">
+                    <label for="reset-otp">Verification Code (6-digit)</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="key-round" class="field-icon"></i>
+                        <input type="text" id="reset-otp" required placeholder="e.g. 123456" pattern="\d{6}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reset-password">New Password</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="lock" class="field-icon"></i>
+                        <input type="password" id="reset-password" required placeholder="Minimum 6 characters">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reset-confirm-password">Confirm New Password</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="lock" class="field-icon"></i>
+                        <input type="password" id="reset-confirm-password" required placeholder="Verify new password">
+                    </div>
+                </div>
+                <div id="reset-error-msg" class="auth-error-msg hidden"></div>
+                <button type="submit" class="btn btn-primary btn-full">
+                    <span>Reset Password</span>
+                    <i data-lucide="check-circle"></i>
+                </button>
+                <div class="form-helper-row" style="text-align: center; margin-top: 0.25rem;">
+                    <a href="#" class="back-to-login-link auth-link-helper" style="font-size: 0.8rem; color: var(--text-link); text-decoration: none;">Back to Sign In</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
