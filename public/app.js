@@ -1218,6 +1218,9 @@ async function handleSignup(e) {
     const password = signupPasswordInput.value;
     const confirmPass = signupConfirmPasswordInput.value;
     
+    const adminCodeInput = document.getElementById('signup-admin-code');
+    const adminCode = adminCodeInput ? adminCodeInput.value : '';
+    
     if (password.length < 6) {
         signupErrorMsg.textContent = 'Password must be at least 6 characters long.';
         signupErrorMsg.classList.remove('hidden');
@@ -1234,7 +1237,7 @@ async function handleSignup(e) {
         const response = await fetch('/api/auth/signup', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, email, password })
+            body: JSON.stringify({ username, email, password, adminCode })
         });
         
         const data = await response.json();
@@ -1294,6 +1297,23 @@ function updateUIForUser() {
         <i data-lucide="cloud-check" style="color: var(--match-color);"></i>
         <span>Cloud Synced</span>
     `;
+    
+    // Dynamically inject admin link in profile dropdown if user is admin
+    const dropdownList = document.querySelector('.dropdown-menu-list');
+    const existingAdminLink = document.getElementById('admin-dashboard-link');
+    if (existingAdminLink) existingAdminLink.remove();
+    
+    if (currentUser.role === 'admin' && dropdownList) {
+        const adminLi = document.createElement('li');
+        adminLi.id = 'admin-dashboard-link';
+        adminLi.innerHTML = `
+            <a href="/admin" class="dropdown-item" style="text-decoration: none; display: flex; align-items: center; gap: 0.5rem; width: 100%; border-top: 1px solid var(--card-border); margin-top: 0.25rem; padding-top: 0.5rem;">
+                <i data-lucide="shield"></i>
+                <span>Admin Panel</span>
+            </a>
+        `;
+        dropdownList.insertBefore(adminLi, dropdownList.lastElementChild);
+    }
     
     // Show review form for logged in user
     if (reviewForm) reviewForm.classList.remove('hidden');

@@ -61,6 +61,7 @@ const UserSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true, index: true },
     password: { type: String, required: true },
     username: { type: String, required: true },
+    role: { type: String, default: 'student' },
     shortlist: { type: [String], default: [] },
     resetCode: { type: String, default: null },
     resetCodeExpires: { type: Date, default: null }
@@ -103,7 +104,7 @@ const authenticateToken = (req, res, next) => {
 // POST /api/auth/signup - Register new student
 app.post('/api/auth/signup', async (req, res) => {
     try {
-        const { username, email, password } = req.body;
+        const { username, email, password, adminCode } = req.body;
         
         if (!username || !email || !password) {
             return res.status(400).json({ message: 'Please provide all required fields' });
@@ -122,18 +123,22 @@ app.post('/api/auth/signup', async (req, res) => {
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
         
+        // Check for admin registration
+        const role = adminCode === 'dse_admin_secret_2026' ? 'admin' : 'student';
+        
         // Create user
         const newUser = new User({
             username,
             email: email.toLowerCase(),
             password: hashedPassword,
+            role,
             shortlist: []
         });
         
         await newUser.save();
         
         // Sign JWT
-        const token = jwt.sign({ id: newUser._id, email: newUser.email }, JWT_SECRET, { expiresIn: '7d' });
+        const token = jwt.sign({ id: newUser._id, email: newUser.email, role: newUser.role }, JWT_SECRET, { expiresIn: '7d' });
         
         res.status(201).json({
             message: 'User registered successfully',
@@ -142,6 +147,7 @@ app.post('/api/auth/signup', async (req, res) => {
                 id: newUser._id,
                 username: newUser.username,
                 email: newUser.email,
+                role: newUser.role,
                 shortlist: newUser.shortlist
             }
         });
@@ -177,7 +183,7 @@ app.post('/api/auth/login', async (req, res) => {
         }
         
         // Sign JWT
-        const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
+        const token = jwt.sign({ id: user._id, email: user.email, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
         
         res.json({
             message: 'Login successful',
@@ -186,6 +192,7 @@ app.post('/api/auth/login', async (req, res) => {
                 id: user._id,
                 username: user.username,
                 email: user.email,
+                role: user.role,
                 shortlist: user.shortlist
             }
         });
@@ -488,8 +495,8 @@ app.delete('/api/reviews/:id', authenticateToken, async (req, res) => {
             return res.status(404).json({ message: 'Review not found' });
         }
 
-        // Check ownership
-        if (review.userId.toString() !== req.user.id) {
+        // Check ownership or admin status
+        if (review.userId.toString() !== req.user.id && req.user.role !== 'admin') {
             return res.status(403).json({ message: 'You are not authorized to delete this review' });
         }
 
@@ -502,6 +509,130 @@ app.delete('/api/reviews/:id', authenticateToken, async (req, res) => {
     }
 });
 
+// Middleware for Admin Authorization
+const authenticateAdmin = (req, res, next) => {
+    authenticateToken(req, res, () => {
+        if (req.user.role !== 'admin') {
+            return res.status(403).json({ message: 'Access denied. Administrator privileges required.' });
+        }
+        next();
+    });
+};
+
+// ----------------------------------------------------
+// Admin API Endpoints (Secure)
+// ----------------------------------------------------
+
+// GET /api/admin/stats - Get system statistics
+app.get('/api/admin/stats', authenticateAdmin, async (req, res) => {
+    try {
+        if (mongoose.connection.readyState !== 1) {
+            return res.status(503).json({ message: 'Database currently offline.' });
+        }
+        
+        const totalUsers = await User.countDocuments({ role: 'student' });
+        const totalAdmins = await User.countDocuments({ role: 'admin' });
+        const totalReviews = await Review.countDocuments();
+        
+        // Find top shortlisted colleges (aggregating User shortlist arrays)
+        const popularCollegesAggregation = await User.aggregate([
+            { $unwind: "$shortlist" },
+            { $group: { _id: "$shortlist", count: { $sum: 1 } } },
+            { $sort: { count: -1 } },
+            { $limit: 5 }
+        ]);
+        
+        res.json({
+            totalUsers,
+            totalAdmins,
+            totalReviews,
+            popularColleges: popularCollegesAggregation
+        });
+    } catch (err) {
+        console.error('Stats error:', err);
+        res.status(500).json({ message: 'Error retrieving system stats.' });
+    }
+});
+
+// GET /api/admin/users - Get registered users
+app.get('/api/admin/users', authenticateAdmin, async (req, res) => {
+    try {
+        if (mongoose.connection.readyState !== 1) {
+            return res.status(503).json({ message: 'Database currently offline.' });
+        }
+        const users = await User.find().select('-password');
+        res.json(users);
+    } catch (err) {
+        console.error('Users fetch error:', err);
+        res.status(500).json({ message: 'Error retrieving users.' });
+    }
+});
+
+// DELETE /api/admin/users/:id - Delete a user
+app.delete('/api/admin/users/:id', authenticateAdmin, async (req, res) => {
+    try {
+        const userId = req.params.id;
+        if (mongoose.connection.readyState !== 1) {
+            return res.status(503).json({ message: 'Database currently offline.' });
+        }
+        
+        // Prevent deleting self
+        if (userId === req.user.id) {
+            return res.status(400).json({ message: 'You cannot delete your own admin account.' });
+        }
+        
+        await User.findByIdAndDelete(userId);
+        res.json({ message: 'User deleted successfully.' });
+    } catch (err) {
+        console.error('User delete error:', err);
+        res.status(500).json({ message: 'Error deleting user.' });
+    }
+});
+
+// POST /api/admin/update-fees - Update Tuition and Development Fees
+app.post('/api/admin/update-fees', authenticateAdmin, async (req, res) => {
+    try {
+        const { college_code, tuition_fee, development_fee } = req.body;
+        
+        if (!college_code || tuition_fee === undefined || development_fee === undefined) {
+            return res.status(400).json({ message: 'Please provide college code, tuition fee, and development fee' });
+        }
+        
+        const fs = require('fs');
+        const fsPath = path.join(__dirname, 'public', 'college_fees_data.json');
+        
+        if (!fs.existsSync(fsPath)) {
+            return res.status(404).json({ message: 'College fees database file not found.' });
+        }
+        
+        const raw = fs.readFileSync(fsPath, 'utf8');
+        const feesData = JSON.parse(raw);
+        
+        if (!feesData[college_code]) {
+            return res.status(404).json({ message: 'College code not found in database.' });
+        }
+        
+        // Update values
+        feesData[college_code].tuition_fee = parseInt(tuition_fee, 10);
+        feesData[college_code].development_fee = parseInt(development_fee, 10);
+        feesData[college_code].total_fee = parseInt(tuition_fee, 10) + parseInt(development_fee, 10);
+        
+        fs.writeFileSync(fsPath, JSON.stringify(feesData, null, 2), 'utf8');
+        
+        res.json({
+            message: 'College fees updated successfully',
+            updated: feesData[college_code]
+        });
+    } catch (err) {
+        console.error('Update fees error:', err);
+        res.status(500).json({ message: 'Error updating college fees database.' });
+    }
+});
+
+// ----------------------------------------------------
+// Page Route Servings
+// ----------------------------------------------------
+
 // Route to serve fees.html
 app.get('/fees', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'fees.html'));
@@ -510,6 +641,11 @@ app.get('/fees', (req, res) => {
 // Route to serve college-details.html
 app.get('/college-fees-details', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'college-details.html'));
+});
+
+// Route to serve admin.html
+app.get('/admin', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
 // Fallback to serve index.html for undefined frontend routes

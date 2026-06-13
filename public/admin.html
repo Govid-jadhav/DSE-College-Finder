@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSE Predictor - Admin Dashboard</title>
+    <meta name="description" content="Secure administrative panel for DSE college predictor website.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="index.css">
+    
+    <style>
+        /* Specific Admin dashboard layout */
+        .admin-container {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+            background-color: var(--bg-color);
+        }
+        
+        @media (max-width: 768px) {
+            .admin-container {
+                grid-template-columns: 1fr;
+            }
+            .admin-sidebar {
+                display: none !important; /* Hide sidebar on mobile, keeping it simple */
+            }
+        }
+        
+        .admin-sidebar {
+            background-color: hsla(223, 47%, 9%, 0.8);
+            border-right: 1px solid var(--card-border);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .sidebar-item button {
+            width: 100%;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.85rem 1rem;
+            border-radius: var(--radius-md);
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: var(--transition);
+        }
+        
+        .sidebar-item button:hover {
+            background-color: rgba(255,255,255,0.03);
+            color: #fff;
+        }
+        
+        .sidebar-item.active button {
+            background-color: var(--secondary);
+            color: var(--primary-hover);
+            border: 1px solid var(--card-border);
+        }
+        
+        .admin-content {
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            overflow-y: auto;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        /* Edit Fees Panel Form */
+        .edit-fee-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="glass-bg-glow"></div>
+    
+    <div class="admin-container">
+        <!-- Sidebar Navigation -->
+        <aside class="admin-sidebar">
+            <div class="brand">
+                <div class="logo-glow">
+                    <i data-lucide="shield"></i>
+                </div>
+                <div>
+                    <h1 style="font-size: 1.25rem;">Admin Panel</h1>
+                    <p class="subtitle">DSE Control Center</p>
+                </div>
+            </div>
+            
+            <nav style="margin-top: 1.5rem;">
+                <ul class="sidebar-menu">
+                    <li class="sidebar-item active" id="tab-overview">
+                        <button onclick="switchTab('overview')">
+                            <i data-lucide="layout-dashboard"></i>
+                            <span>Overview Stats</span>
+                        </button>
+                    </li>
+                    <li class="sidebar-item" id="tab-reviews">
+                        <button onclick="switchTab('reviews')">
+                            <i data-lucide="message-square"></i>
+                            <span>Manage Reviews</span>
+                        </button>
+                    </li>
+                    <li class="sidebar-item" id="tab-users">
+                        <button onclick="switchTab('users')">
+                            <i data-lucide="users"></i>
+                            <span>Manage Users</span>
+                        </button>
+                    </li>
+                    <li class="sidebar-item" id="tab-fees">
+                        <button onclick="switchTab('fees')">
+                            <i data-lucide="coins"></i>
+                            <span>Manage College Fees</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div style="margin-top: auto; display: flex; flex-direction: column; gap: 0.75rem;">
+                <a href="/" class="btn btn-secondary" style="text-decoration: none; display: flex; justify-content: center; width: 100%;">
+                    <i data-lucide="home"></i>
+                    <span>Go to Predictor</span>
+                </a>
+                <button id="admin-signout-btn" class="btn btn-secondary" style="color: hsl(0, 85%, 65%); border-color: rgba(255,0,0,0.15); width: 100%;">
+                    <i data-lucide="log-out"></i>
+                    <span>Sign Out</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Dashboard Viewport -->
+        <main class="admin-content">
+            <!-- Header greeting -->
+            <header style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); padding-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h2 style="font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; color: #fff;">Hello, Administrator</h2>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Monitor predictor activity, manage data tables, and resolve student reviews.</p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.75rem; background-color: var(--secondary); padding: 0.5rem 1rem; border-radius: var(--radius-md); border: 1px solid var(--card-border);">
+                    <i data-lucide="user-check" style="color: var(--primary-hover); width: 18px; height: 18px;"></i>
+                    <span id="admin-display-name" style="font-size: 0.85rem; font-weight: 600; color: #fff;">Admin</span>
+                </div>
+            </header>
+
+            <!-- Loading Spinner -->
+            <div id="admin-loader" class="loader-container">
+                <div class="spinner"></div>
+                <p>Loading dashboard panel data...</p>
+            </div>
+
+            <!-- SECTION 1: OVERVIEW STATS -->
+            <section id="view-overview" class="admin-view hidden" style="display: flex; flex-direction: column; gap: 2rem;">
+                <!-- Mini Stats Overview Cards -->
+                <div class="stats-grid" style="margin-bottom: 0;">
+                    <div class="stat-card" style="border-left: 4px solid var(--primary);">
+                        <div class="stat-icon" style="background-color: rgba(100,50,250,0.1); color: var(--primary);"><i data-lucide="users"></i></div>
+                        <div>
+                            <h3>Registered Students</h3>
+                            <p class="stat-count" id="stat-total-students">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card" style="border-left: 4px solid var(--match-color);">
+                        <div class="stat-icon" style="background-color: rgba(30,200,120,0.1); color: var(--match-color);"><i data-lucide="message-square"></i></div>
+                        <div>
+                            <h3>Student Reviews</h3>
+                            <p class="stat-count" id="stat-total-reviews">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card" style="border-left: 4px solid var(--dream-color);">
+                        <div class="stat-icon" style="background-color: rgba(180,50,255,0.1); color: var(--dream-color);"><i data-lucide="shield-check"></i></div>
+                        <div>
+                            <h3>Active Administrators</h3>
+                            <p class="stat-count" id="stat-total-admins">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Popular Shortlisted Colleges Card -->
+                <div class="Card" style="padding: 2rem; display: flex; flex-direction: column; gap: 1rem;">
+                    <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
+                        <i data-lucide="trending-up" style="color: var(--match-color); width: 22px; height: 22px;"></i>
+                        Top 5 Most Shortlisted Colleges
+                    </h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Real-time count of how many times choice codes of these institutions have been bookmarked by students.</p>
+                    
+                    <div class="fees-table-container">
+                        <table class="fees-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 100px;">Rank</th>
+                                    <th style="width: 150px;">Choice Code</th>
+                                    <th>College Name</th>
+                                    <th style="width: 150px; text-align: center;">Times Shortlisted</th>
+                                </tr>
+                            </thead>
+                            <tbody id="popular-colleges-body">
+                                <!-- Injected dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: MANAGE REVIEWS -->
+            <section id="view-reviews" class="admin-view hidden" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div class="Card" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+                    <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600;">Reviews Moderation Directory</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Administrators can delete inappropriate feedback or comments containing spam.</p>
+                    
+                    <div class="fees-table-container">
+                        <table class="fees-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 160px;">Date</th>
+                                    <th style="width: 160px;">Username</th>
+                                    <th style="width: 100px;">Rating</th>
+                                    <th>Student Comment</th>
+                                    <th style="width: 100px; text-align: center;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-reviews-body">
+                                <!-- Injected dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3: MANAGE USERS -->
+            <section id="view-users" class="admin-view hidden" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div class="Card" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+                    <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600;">Registered User Directory</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">View all registered profiles. Deleting a user deletes their cloud shortlist data.</p>
+                    
+                    <div class="fees-table-container">
+                        <table class="fees-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 200px;">User ID</th>
+                                    <th>Full Name</th>
+                                    <th>Email Address</th>
+                                    <th style="width: 150px;">Role</th>
+                                    <th style="width: 100px; text-align: center;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-users-body">
+                                <!-- Injected dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4: MANAGE FEES -->
+            <section id="view-fees" class="admin-view hidden" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div class="Card" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+                    <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600;">Edit College Base Fees</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Search any college code or name, and click "Edit Base Fees" to modify their approved Tuition and Development fees directly.</p>
+                    
+                    <!-- Search input -->
+                    <div class="search-box" style="max-width: 450px;">
+                        <i data-lucide="search"></i>
+                        <input type="text" id="admin-fees-search" placeholder="Search college name or code...">
+                    </div>
+                    
+                    <div class="fees-table-container">
+                        <table class="fees-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 100px;">Code</th>
+                                    <th>College Name</th>
+                                    <th style="width: 180px;">Type</th>
+                                    <th style="width: 120px; text-align: right;">Base Tuition</th>
+                                    <th style="width: 120px; text-align: right;">Base Dev. Fee</th>
+                                    <th style="width: 120px; text-align: right;">Total Fee</th>
+                                    <th style="width: 120px; text-align: center;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-fees-body">
+                                <!-- Injected dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Edit Fees Modal Dialog -->
+    <div id="edit-fee-modal" class="edit-fee-modal hidden">
+        <div class="auth-modal-card Card" style="max-width: 450px; padding: 2rem;">
+            <button onclick="closeEditModal()" class="auth-modal-close icon-btn" aria-label="Close dialog">
+                <i data-lucide="x"></i>
+            </button>
+            
+            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; margin-bottom: 1.25rem; color: #fff;">Edit Institution Fees</h3>
+            
+            <form id="edit-fee-form">
+                <input type="hidden" id="edit-college-code">
+                
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label>College Name</label>
+                    <div id="edit-college-name-display" style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; background-color: rgba(255,255,255,0.02); padding: 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--card-border);">---</div>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label for="edit-tuition">Tuition Fee (₹)</label>
+                    <input type="number" id="edit-tuition" min="0" required placeholder="e.g. 95000">
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="edit-development">Development Fee (₹)</label>
+                    <input type="number" id="edit-development" min="0" required placeholder="e.g. 10000">
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-full">
+                    <span>Save Changes</span>
+                    <i data-lucide="save"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
