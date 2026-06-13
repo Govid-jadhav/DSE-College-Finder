@@ -40,8 +40,8 @@ console.log(`Email verification service successfully initialized with: ${emailGa
 const app = express();
 app.use(express.json());
 
-// Serve static assets from the current directory
-app.use(express.static(__dirname));
+// Serve static assets from the public directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 // MongoDB connection
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/dse_predictor';
@@ -504,17 +504,17 @@ app.delete('/api/reviews/:id', authenticateToken, async (req, res) => {
 
 // Route to serve fees.html
 app.get('/fees', (req, res) => {
-    res.sendFile(path.join(__dirname, 'fees.html'));
+    res.sendFile(path.join(__dirname, 'public', 'fees.html'));
 });
 
 // Route to serve college-details.html
 app.get('/college-fees-details', (req, res) => {
-    res.sendFile(path.join(__dirname, 'college-details.html'));
+    res.sendFile(path.join(__dirname, 'public', 'college-details.html'));
 });
 
 // Fallback to serve index.html for undefined frontend routes
 app.get('/{*splat}', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Listen on designated port
