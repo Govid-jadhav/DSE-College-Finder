@@ -9,6 +9,7 @@ let allUsers = [];
 let allReviews = [];
 let collegesFeesList = {};
 let feesSearchQuery = "";
+let activeCharts = { role: null, rating: null, colleges: null };
 
 // DOM Elements
 const loader = document.getElementById("admin-loader");
@@ -158,9 +159,13 @@ async function fetchOverviewStats() {
     
     // Load local fees data to resolve names
     await fetchCollegesFees();
+
+    // Render interactive graphs
+    renderCharts(statsData);
     
     if (statsData.popularColleges.length === 0) {
         tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted);">No colleges shortlisted by students yet.</td></tr>`;
+        lucide.createIcons();
         return;
     }
     
@@ -181,6 +186,183 @@ async function fetchOverviewStats() {
     });
     
     lucide.createIcons();
+}
+
+function renderCharts(statsData) {
+    // Destroy existing charts to prevent canvas mouseover redraw overlapping glitches
+    if (activeCharts.role) activeCharts.role.destroy();
+    if (activeCharts.rating) activeCharts.rating.destroy();
+    if (activeCharts.colleges) activeCharts.colleges.destroy();
+
+    // CSS variables styled matching existing dark-theme config
+    const textMuted = '#94a3b8';
+    const gridColor = 'rgba(255, 255, 255, 0.05)';
+    const fontFamily = "'Outfit', 'Inter', sans-serif";
+
+    Chart.defaults.color = textMuted;
+    Chart.defaults.font.family = fontFamily;
+    Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(8, 11, 17, 0.95)';
+    Chart.defaults.plugins.tooltip.borderColor = 'rgba(255, 255, 255, 0.08)';
+    Chart.defaults.plugins.tooltip.borderWidth = 1;
+    Chart.defaults.plugins.tooltip.padding = 10;
+    Chart.defaults.plugins.tooltip.titleFont = { family: fontFamily, weight: 'bold' };
+    Chart.defaults.plugins.tooltip.bodyFont = { family: fontFamily };
+
+    // 1. User Role Distribution (Doughnut)
+    const roleCtx = document.getElementById('roleChart').getContext('2d');
+    activeCharts.role = new Chart(roleCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Students', 'Administrators'],
+            datasets: [{
+                data: [statsData.totalUsers, statsData.totalAdmins],
+                backgroundColor: [
+                    'rgba(99, 102, 241, 0.45)', // Indigo
+                    'rgba(192, 132, 252, 0.45)'  // Purple
+                ],
+                borderColor: [
+                    '#6366f1',
+                    '#c084fc'
+                ],
+                borderWidth: 1.5,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 12,
+                        padding: 15
+                    }
+                }
+            },
+            cutout: '65%'
+        }
+    });
+
+    // 2. Reviews Rating Distribution (Doughnut)
+    const ratingsData = [0, 0, 0, 0, 0];
+    if (statsData.ratingDistribution) {
+        statsData.ratingDistribution.forEach(item => {
+            const r = parseInt(item._id, 10);
+            if (r >= 1 && r <= 5) {
+                ratingsData[r - 1] = item.count;
+            }
+        });
+    }
+
+    const ratingCtx = document.getElementById('ratingChart').getContext('2d');
+    activeCharts.rating = new Chart(ratingCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['1 Star', '2 Stars', '3 Stars', '4 Stars', '5 Stars'],
+            datasets: [{
+                data: ratingsData,
+                backgroundColor: [
+                    'rgba(244, 63, 94, 0.45)',   // 1 Star: Rose Red
+                    'rgba(251, 146, 60, 0.45)',  // 2 Stars: Orange
+                    'rgba(250, 204, 21, 0.45)',  // 3 Stars: Yellow
+                    'rgba(96, 165, 250, 0.45)',  // 4 Stars: Blue
+                    'rgba(52, 211, 153, 0.45)'   // 5 Stars: Emerald Green
+                ],
+                borderColor: [
+                    '#f43f5e',
+                    '#fb923c',
+                    '#facc15',
+                    '#60a5fa',
+                    '#34d399'
+                ],
+                borderWidth: 1.5,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 12,
+                        padding: 15
+                    }
+                }
+            },
+            cutout: '65%'
+        }
+    });
+
+    // 3. Top Shortlisted Colleges Horizontal Bar Chart
+    const collegeCtx = document.getElementById('collegesChart').getContext('2d');
+    
+    const collegeLabels = [];
+    const collegeCounts = [];
+    
+    if (statsData.popularColleges && statsData.popularColleges.length > 0) {
+        statsData.popularColleges.forEach(item => {
+            let label = item._id;
+            const matched = Object.values(collegesFeesList).find(c => item._id.startsWith(c.college_code));
+            if (matched) {
+                const parts = matched.college_name.split(',');
+                let shortName = parts[0];
+                if (shortName.length > 30) {
+                    shortName = shortName.substring(0, 28) + '...';
+                }
+                label = `${item._id} (${shortName})`;
+            }
+            collegeLabels.push(label);
+            collegeCounts.push(item.count);
+        });
+    }
+
+    activeCharts.colleges = new Chart(collegeCtx, {
+        type: 'bar',
+        data: {
+            labels: collegeLabels.length > 0 ? collegeLabels : ['No Bookmarks Yet'],
+            datasets: [{
+                label: 'Bookmarks count',
+                data: collegeCounts.length > 0 ? collegeCounts : [0],
+                backgroundColor: 'rgba(52, 211, 153, 0.45)', // Emerald
+                borderColor: '#34d399',
+                borderWidth: 1.5,
+                borderRadius: 4
+            }]
+        },
+        options: {
+            indexAxis: 'y', // Horizontal Layout
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        color: gridColor
+                    },
+                    ticks: {
+                        precision: 0
+                    },
+                    title: {
+                        display: true,
+                        text: 'Number of Student Shortlists',
+                        font: { weight: 'bold' }
+                    }
+                },
+                y: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
 }
 
 // ----------------------------------------------------

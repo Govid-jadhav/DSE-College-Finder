@@ -541,12 +541,18 @@ app.get('/api/admin/stats', authenticateAdmin, async (req, res) => {
             { $sort: { count: -1 } },
             { $limit: 5 }
         ]);
+
+        // Find review ratings distribution
+        const ratingDistribution = await Review.aggregate([
+            { $group: { _id: "$rating", count: { $sum: 1 } } }
+        ]);
         
         res.json({
             totalUsers,
             totalAdmins,
             totalReviews,
-            popularColleges: popularCollegesAggregation
+            popularColleges: popularCollegesAggregation,
+            ratingDistribution
         });
     } catch (err) {
         console.error('Stats error:', err);

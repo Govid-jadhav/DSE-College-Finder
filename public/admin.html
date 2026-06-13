@@ -11,6 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="index.css">
     
     <style>
@@ -207,6 +209,41 @@
                             <h3>Active Administrators</h3>
                             <p class="stat-count" id="stat-total-admins">0</p>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Charts Dashboard Grid -->
+                <div class="charts-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+                    <!-- User Role Distribution Chart -->
+                    <div class="Card" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; min-height: 320px;">
+                        <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0; color: #fff;">
+                            <i data-lucide="users" style="color: var(--primary); width: 18px; height: 18px;"></i>
+                            User Role Distribution
+                        </h3>
+                        <div style="flex: 1; position: relative; display: flex; justify-content: center; align-items: center; min-height: 200px;">
+                            <canvas id="roleChart"></canvas>
+                        </div>
+                    </div>
+                    <!-- Ratings Distribution Chart -->
+                    <div class="Card" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; min-height: 320px;">
+                        <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0; color: #fff;">
+                            <i data-lucide="star" style="color: hsl(45, 100%, 55%); width: 18px; height: 18px;"></i>
+                            Reviews Rating Distribution
+                        </h3>
+                        <div style="flex: 1; position: relative; display: flex; justify-content: center; align-items: center; min-height: 200px;">
+                            <canvas id="ratingChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Shortlisted Colleges Chart Card -->
+                <div class="Card" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; min-height: 350px;">
+                    <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0; color: #fff;">
+                        <i data-lucide="trending-up" style="color: var(--match-color); width: 18px; height: 18px;"></i>
+                        Shortlist Activity (Top 5 Bookmarks)
+                    </h3>
+                    <div style="flex: 1; position: relative; min-height: 250px;">
+                        <canvas id="collegesChart"></canvas>
                     </div>
                 </div>
 
