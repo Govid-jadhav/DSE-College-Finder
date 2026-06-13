@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: dse-college-finder
+    env: node
+    buildCommand: npm install
+    startCommand: node server.js
+    plan: free
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: MONGODB_URI
+        sync: false
+        placeholder: "Enter your MongoDB Atlas connection string (e.g. mongodb+srv://...)"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: EMAIL_USER
+        sync: false
+        optional: true
+        placeholder: "Optional: Your Gmail SMTP email address"
+      - key: EMAIL_PASS
+        sync: false
+        optional: true
+        placeholder: "Optional: Your Gmail SMTP App Password"
