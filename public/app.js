@@ -97,6 +97,7 @@ const selectedRatingInput = document.getElementById('selected-rating');
 const reviewFormTitle = document.getElementById('review-form-title');
 const reviewSubmitText = document.getElementById('review-submit-text');
 const reviewCancelBtn = document.getElementById('review-cancel-btn');
+const reviewAlreadySubmittedMsg = document.getElementById('review-already-submitted-msg');
 
 // Category Code Mappings to Friendly Names
 const CATEGORY_MAP = {
@@ -1062,6 +1063,36 @@ function updatePredictorLockStatus() {
     } else {
         lockMsg.classList.add('hidden');
     }
+    updateReviewFormVisibility();
+}
+
+// Toggle review form visibility based on login state and review status
+function updateReviewFormVisibility() {
+    if (!reviewForm || !reviewGuestCta || !reviewAlreadySubmittedMsg) return;
+
+    if (!token || !currentUser) {
+        // Guest mode
+        reviewForm.classList.add('hidden');
+        reviewAlreadySubmittedMsg.classList.add('hidden');
+        reviewGuestCta.classList.remove('hidden');
+    } else {
+        // User logged in
+        reviewGuestCta.classList.add('hidden');
+        
+        if (editingReviewId) {
+            // Edit review mode
+            reviewForm.classList.remove('hidden');
+            reviewAlreadySubmittedMsg.classList.add('hidden');
+        } else if (hasUserReviewed()) {
+            // Already reviewed mode (don't show form)
+            reviewForm.classList.add('hidden');
+            reviewAlreadySubmittedMsg.classList.remove('hidden');
+        } else {
+            // Needs to review
+            reviewForm.classList.remove('hidden');
+            reviewAlreadySubmittedMsg.classList.add('hidden');
+        }
+    }
 }
 
 // ----------------------------------------------------
@@ -1809,6 +1840,7 @@ window.startEditReview = function(id) {
     if (reviewSubmitText) reviewSubmitText.textContent = 'Update Review';
     if (reviewCancelBtn) reviewCancelBtn.classList.remove('hidden');
     
+    updateReviewFormVisibility();
     const writePanel = document.querySelector('.write-review-panel');
     if (writePanel) {
         writePanel.scrollIntoView({ behavior: 'smooth' });
@@ -1826,6 +1858,7 @@ window.cancelEditReview = function() {
     if (reviewSubmitText) reviewSubmitText.textContent = 'Submit Review';
     if (reviewCancelBtn) reviewCancelBtn.classList.add('hidden');
     if (reviewErrorMsg) reviewErrorMsg.classList.add('hidden');
+    updateReviewFormVisibility();
 };
 
 // Delete review (Disabled)
