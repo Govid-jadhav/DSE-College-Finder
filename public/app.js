@@ -970,6 +970,9 @@ function convertToCSV(headers, rows) {
 
 // Helper to trigger file download in browser
 function triggerCSVDownload(filename, csvData) {
+    // Show AI warning popup
+    alert("AI Notice & Disclaimer:\n\nAll cutoff predictions, listing data, and analytics exported in this file are generated with the help of AI models using historical CAP round datasets. Actual cutoffs vary year-by-year depending on seat availability and candidate choices.\n\nMake sure to double-check and verify choice codes and cutoff percentages against official CET Cell lists before submitting your final CAP option form!");
+
     const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
