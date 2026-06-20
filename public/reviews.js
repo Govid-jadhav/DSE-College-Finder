@@ -253,11 +253,8 @@ async function handleReviewSubmit(e) {
         const data = await response.json();
         
         if (response.ok) {
-            const wasEditing = !!editingReviewId;
             window.cancelEditReview();
-            
-            await fetchReviews();
-            alert(wasEditing ? 'Your review has been updated.' : 'Thank you! Your review has been submitted successfully.');
+            window.location.href = '/predictor?show_shortlist_info=true';
         } else {
             reviewErrorMsg.textContent = data.message || 'Submission failed';
             reviewErrorMsg.classList.remove('hidden');
