@@ -1620,10 +1620,10 @@ body {
 }
 
 .reviewer-name {
-    font-family: var(--font-heading);
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: #fff;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--text-muted);
 }
 
 .review-date {
@@ -1646,8 +1646,8 @@ body {
 }
 
 .review-text {
-    font-size: 0.9rem;
-    color: var(--text-muted);
+    font-size: 1.05rem;
+    color: #fff;
     line-height: 1.5;
 }
 
