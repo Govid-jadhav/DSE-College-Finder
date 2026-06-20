@@ -561,8 +561,9 @@
                     <label for="signup-admin-code">Admin Access Code (Optional)</label>
                     <div class="input-wrapper">
                         <i data-lucide="shield-alert" class="field-icon"></i>
-                        <input type="password" id="signup-admin-code" placeholder="Enter secret code for admin role">
+                        <input type="text" id="signup-admin-code" placeholder="Enter secret code for admin role">
                     </div>
+                    <span class="helper-text" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;">Only required during signup to register as an administrator. Standard login does not require a secret key.</span>
                 </div>
                 <div id="signup-error-msg" class="auth-error-msg hidden"></div>
                 <button type="submit" class="btn btn-primary btn-full">
