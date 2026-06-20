@@ -311,6 +311,35 @@ function handlePredict(e) {
         showAuthModal('login');
         loginErrorMsg.textContent = "Please sign in or create an account first to search for colleges.";
         loginErrorMsg.classList.remove('hidden');
+        updatePredictorLockStatus();
+        return;
+    }
+    
+    // Enforce review submission requirement
+    if (!hasUserReviewed()) {
+        updatePredictorLockStatus();
+        const lockMsg = document.getElementById('predictor-lock-msg');
+        if (lockMsg) {
+            lockMsg.classList.remove('hidden');
+            lockMsg.style.transform = 'scale(1.02)';
+            setTimeout(() => lockMsg.style.transform = 'none', 300);
+        }
+        
+        // Smooth scroll to the reviews section
+        const reviewsSec = document.getElementById('reviews-section');
+        if (reviewsSec) {
+            reviewsSec.scrollIntoView({ behavior: 'smooth' });
+            
+            // Flash the reviews section write-review-panel
+            const writePanel = document.querySelector('.write-review-panel');
+            if (writePanel) {
+                writePanel.style.boxShadow = '0 0 25px rgba(239, 68, 68, 0.4)';
+                writePanel.style.transition = 'box-shadow 0.3s ease';
+                setTimeout(() => {
+                    writePanel.style.boxShadow = 'none';
+                }, 2000);
+            }
+        }
         return;
     }
     
@@ -986,6 +1015,52 @@ function reconcileShortlistObjects() {
     renderShortlist();
 }
 
+// Check if the current logged-in user has written a review
+function hasUserReviewed() {
+    if (!currentUser) return false;
+    const currentUserId = currentUser._id || currentUser.id;
+    if (!currentUserId) return false;
+    return loadedReviews.some(r => r.userId && r.userId.toString() === currentUserId.toString());
+}
+
+// Update predictor form lock banner text, visibility, and listeners based on login & review state
+function updatePredictorLockStatus() {
+    const lockMsg = document.getElementById('predictor-lock-msg');
+    if (!lockMsg) return;
+    
+    if (!token || !currentUser) {
+        lockMsg.innerHTML = `
+            <i data-lucide="lock" style="flex-shrink: 0; color: #ef4444; width: 20px; height: 20px;"></i>
+            <div style="text-align: left; font-size: 0.9rem; line-height: 1.4;">
+                <strong>Predictor Locked:</strong> You must sign in and submit a student review to unlock the college list.
+                <a href="#" id="lock-banner-action-link" style="color: var(--text-link); text-decoration: underline; margin-left: 0.5rem; font-weight: 600;">Sign In / Sign Up &rarr;</a>
+            </div>
+        `;
+        lockMsg.classList.remove('hidden');
+        
+        const actionLink = document.getElementById('lock-banner-action-link');
+        if (actionLink) {
+            actionLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showAuthModal('login');
+            });
+        }
+        lucide.createIcons();
+    } else if (!hasUserReviewed()) {
+        lockMsg.innerHTML = `
+            <i data-lucide="lock" style="flex-shrink: 0; color: #ef4444; width: 20px; height: 20px;"></i>
+            <div style="text-align: left; font-size: 0.9rem; line-height: 1.4;">
+                <strong>Predictor Locked:</strong> You must submit a student review to unlock the college list.
+                <a href="#reviews-section" id="lock-banner-action-link" style="color: var(--text-link); text-decoration: underline; margin-left: 0.5rem; font-weight: 600;">Write Review Now &rarr;</a>
+            </div>
+        `;
+        lockMsg.classList.remove('hidden');
+        lucide.createIcons();
+    } else {
+        lockMsg.classList.add('hidden');
+    }
+}
+
 // ----------------------------------------------------
 // Authentication & Sync Logic
 // ----------------------------------------------------
@@ -1325,6 +1400,7 @@ function updateUIForUser() {
     if (loadedReviews && loadedReviews.length > 0) {
         renderReviewsList(loadedReviews);
     }
+    updatePredictorLockStatus();
 }
 
 function updateUIForGuest() {
@@ -1346,6 +1422,7 @@ function updateUIForGuest() {
     if (loadedReviews && loadedReviews.length > 0) {
         renderReviewsList(loadedReviews);
     }
+    updatePredictorLockStatus();
 }
 
 async function syncShortlistWithCloud() {
@@ -1553,6 +1630,7 @@ async function fetchReviews() {
         
         const reviews = await response.json();
         renderReviewsList(reviews);
+        updatePredictorLockStatus();
     } catch (err) {
         console.error('Error fetching reviews:', err);
         reviewsLoader.classList.add('hidden');
@@ -1746,6 +1824,12 @@ window.deleteReview = async function(id) {
                 cancelEditReview();
             }
             await fetchReviews();
+            
+            // Hide prediction results if they no longer have an active review
+            if (!hasUserReviewed()) {
+                if (resultsSection) resultsSection.classList.add('hidden');
+            }
+            
             alert('Review deleted successfully.');
         } else {
             alert(data.message || 'Failed to delete review.');
