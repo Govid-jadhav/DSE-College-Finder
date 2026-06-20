@@ -28,15 +28,60 @@
                 </div>
             </div>
             <div class="header-actions">
-                <a href="/fees" class="btn btn-secondary" style="text-decoration: none;">
-                    <i data-lucide="list"></i>
-                    <span>Fees Directory</span>
-                </a>
-                <a href="/" class="btn btn-secondary" style="text-decoration: none;">
-                    <i data-lucide="sparkles"></i>
-                    <span>Predictor</span>
-                </a>
+                <nav class="nav-pills">
+                    <a href="/" class="nav-pill">
+                        <i data-lucide="home"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="/predictor" class="nav-pill">
+                        <i data-lucide="sparkles"></i>
+                        <span>Predictor</span>
+                    </a>
+                    <a href="/fees" class="nav-pill active">
+                        <i data-lucide="indian-rupee"></i>
+                        <span>Fees</span>
+                    </a>
+                    <a href="/documents" class="nav-pill">
+                        <i data-lucide="file-text"></i>
+                        <span>Documents</span>
+                    </a>
+                    <a href="/reviews" class="nav-pill">
+                        <i data-lucide="message-square"></i>
+                        <span>Reviews</span>
+                    </a>
+                </nav>
+                
+                <!-- User Area Menu -->
+                <div id="user-header-menu" class="user-header-menu">
+                    <button id="header-signin-btn" class="btn btn-primary">
+                        <i data-lucide="user"></i>
+                        <span>Sign In</span>
+                    </button>
+                    <div id="header-profile-dropdown" class="header-profile-dropdown hidden">
+                        <button id="profile-trigger-btn" class="profile-trigger">
+                            <span class="user-avatar-initials" id="user-avatar">U</span>
+                            <span class="username-display" id="user-display">Student</span>
+                            <i data-lucide="chevron-down" class="dropdown-chevron"></i>
+                        </button>
+                        <ul class="dropdown-menu-list">
+                            <li id="sync-shortlist-status" class="dropdown-status-info">
+                                <i data-lucide="cloud-lightning"></i>
+                                <span>Guest Session</span>
+                            </li>
+                            <li>
+                                <button id="header-signout-btn" class="dropdown-item">
+                                    <i data-lucide="log-out"></i>
+                                    <span>Sign Out</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
+            
+            <button class="hamburger-btn" aria-label="Open menu">
+                <i data-lucide="menu"></i>
+            </button>
         </div>
     </header>
 
@@ -136,6 +181,7 @@
         </div>
     </footer>
 
+    <script src="shared-auth.js"></script>
     <script src="college-details.js"></script>
 </body>
 </html>

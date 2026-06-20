@@ -2031,3 +2031,230 @@ body {
     }
 }
 
+/* ==========================================================================
+   Responsive Floating Pill Navbar & Flyout Mobile Drawer
+   ========================================================================== */
+
+/* Desktop Nav Pills container */
+.nav-pills {
+    display: flex;
+    align-items: center;
+    background: hsla(223, 47%, 14%, 0.6);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-full);
+    padding: 0.35rem;
+    gap: 0.25rem;
+    backdrop-filter: blur(10px);
+}
+
+.nav-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.2rem;
+    border-radius: var(--radius-full);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.nav-pill i {
+    width: 16px;
+    height: 16px;
+}
+
+.nav-pill:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-pill.active {
+    background: #fff;
+    color: var(--bg-color); /* Matches the dark theme background color */
+    font-weight: 600;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Mobile Hamburger Button */
+.hamburger-btn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--secondary);
+    border: 1px solid var(--card-border);
+    color: #fff;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.hamburger-btn:hover {
+    background: var(--secondary-hover);
+    transform: scale(1.05);
+}
+
+.hamburger-btn i {
+    width: 20px;
+    height: 20px;
+}
+
+/* Mobile Drawer Overlay */
+.mobile-drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(6, 9, 22, 0.8);
+    backdrop-filter: blur(5px);
+    z-index: 2400;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-drawer-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Mobile Slide-Out Drawer (matching vertical style) */
+.mobile-drawer {
+    position: fixed;
+    top: 0;
+    left: -290px;
+    width: 290px;
+    height: 100vh;
+    background-color: var(--surface-color);
+    border-right: 1px solid var(--card-border);
+    z-index: 2500;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: var(--shadow-lg);
+}
+
+.mobile-drawer.open {
+    transform: translateX(290px);
+}
+
+.mobile-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.mobile-drawer-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.mobile-drawer-brand .logo-glow {
+    background: var(--primary-glow);
+    color: var(--primary-hover);
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-drawer-brand h3 {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+
+.mobile-drawer-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex-grow: 1;
+}
+
+.mobile-drawer-item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.8rem 1.25rem;
+    border-radius: var(--radius-md);
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.mobile-drawer-item i {
+    width: 18px;
+    height: 18px;
+}
+
+.mobile-drawer-item:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.mobile-drawer-item.active {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--primary-hover);
+    font-weight: 600;
+    border-left: 3px solid var(--primary);
+}
+
+.mobile-drawer-footer {
+    padding-top: 1rem;
+    border-top: 1px solid var(--card-border);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.mobile-drawer-footer .user-header-menu {
+    width: 100%;
+}
+
+.mobile-drawer-footer .btn-primary,
+.mobile-drawer-footer .btn-secondary {
+    width: 100%;
+    justify-content: center;
+}
+
+/* Media Query Adaptations for responsiveness */
+@media (max-width: 1024px) {
+    .header-actions {
+        display: none !important;
+    }
+    .hamburger-btn {
+        display: flex !important;
+    }
+    
+    /* Layout adaptations for grid views */
+    #documents-layout-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .reviews-layout {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .write-review-panel {
+        position: static !important;
+        width: 100% !important;
+        margin-bottom: 1.5rem;
+    }
+}
+
+

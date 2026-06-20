@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSE College Predictor & Recommender - DSE 2025</title>
+    <meta name="description" content="Find matching engineering colleges in Maharashtra for Direct Second Year (DSE) admission based on aggregate diploma scores.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="glass-bg-glow"></div>
+    
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand" onclick="window.location.href='/'" style="cursor: pointer;">
+                <div class="logo-glow">
+                    <i data-lucide="graduation-cap"></i>
+                </div>
+                <div>
+                    <h1>DSE College Finder</h1>
+                    <p class="subtitle">Direct Second Year Engineering Predictor 2025-26</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <nav class="nav-pills">
+                    <a href="/" class="nav-pill">
+                        <i data-lucide="home"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="/predictor" class="nav-pill active">
+                        <i data-lucide="sparkles"></i>
+                        <span>Predictor</span>
+                    </a>
+                    <a href="/fees" class="nav-pill">
+                        <i data-lucide="indian-rupee"></i>
+                        <span>Fees</span>
+                    </a>
+                    <a href="/documents" class="nav-pill">
+                        <i data-lucide="file-text"></i>
+                        <span>Documents</span>
+                    </a>
+                    <a href="/reviews" class="nav-pill">
+                        <i data-lucide="message-square"></i>
+                        <span>Reviews</span>
+                    </a>
+                </nav>
+                
+                <button id="view-shortlist-btn" class="btn btn-secondary" aria-label="View Shortlist">
+                    <i data-lucide="bookmark"></i>
+                    <span>Shortlist</span>
+                    <span id="shortlist-badge" class="badge">0</span>
+                </button>
+                
+                <!-- User Area Menu -->
+                <div id="user-header-menu" class="user-header-menu">
+                    <button id="header-signin-btn" class="btn btn-primary">
+                        <i data-lucide="user"></i>
+                        <span>Sign In</span>
+                    </button>
+                    <div id="header-profile-dropdown" class="header-profile-dropdown hidden">
+                        <button id="profile-trigger-btn" class="profile-trigger">
+                            <span class="user-avatar-initials" id="user-avatar">U</span>
+                            <span class="username-display" id="user-display">Student</span>
+                            <i data-lucide="chevron-down" class="dropdown-chevron"></i>
+                        </button>
+                        <ul class="dropdown-menu-list">
+                            <li id="sync-shortlist-status" class="dropdown-status-info">
+                                <i data-lucide="cloud-lightning"></i>
+                                <span>Guest Session</span>
+                            </li>
+                            <li>
+                                <button id="header-signout-btn" class="dropdown-item">
+                                    <i data-lucide="log-out"></i>
+                                    <span>Sign Out</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="hamburger-btn" aria-label="Open menu">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="app-main animate-fade-in">
+        <!-- Hero Title -->
+        <section class="hero-section" aria-labelledby="hero-title" style="padding-bottom: 1.5rem; text-align: center;">
+            <div class="hero-content" style="align-items: center; max-width: 100%;">
+                <div class="hero-badge">
+                    <i data-lucide="sparkles"></i>
+                    <span>Precision Matcher Engine</span>
+                </div>
+                <h1 id="hero-title" style="font-size: 2.8rem; line-height: 1.2;">DSE College Predictor Tool</h1>
+                <p class="hero-subtitle" style="margin-top: 0.5rem; max-width: 700px;">Enter your Diploma percentage, select your category and preferences, and discover engineering options categorized by acceptance probability.</p>
+            </div>
+        </section>
+
+        <!-- Input Form Section -->
+        <section id="predictor-form-section" class="predictor-section Card" aria-labelledby="form-title" style="max-width: 1000px; margin: 0 auto 2rem auto;">
+            <h2 id="form-title" class="visually-hidden">Predictor Options</h2>
+            
+            <!-- Predictor Lock Banner -->
+            <div id="predictor-lock-msg" class="lock-banner hidden" style="margin-bottom: 1.5rem; padding: 1.25rem; background: rgba(239, 68, 68, 0.15); border: 1px dashed rgba(239, 68, 68, 0.3); border-radius: var(--radius-md); display: flex; align-items: center; gap: 0.75rem; color: #fca5a5;">
+                <i data-lucide="lock" style="flex-shrink: 0; color: #ef4444; width: 20px; height: 20px;"></i>
+                <div style="text-align: left; font-size: 0.9rem; line-height: 1.4;">
+                    <strong>Predictor Locked:</strong> You must sign in and submit a student review to unlock the college list.
+                    <a href="/reviews" id="lock-banner-action-link" style="color: var(--text-link); text-decoration: underline; margin-left: 0.5rem; font-weight: 600;">Submit Review &rarr;</a>
+                </div>
+            </div>
+
+            <form id="predictor-form" class="predictor-form">
+                <div class="form-grid">
+                    <!-- Percentage Input -->
+                    <div class="form-group">
+                        <label for="student-percentage">
+                            <i data-lucide="percent" class="input-icon"></i>
+                            Diploma / B.Sc. Percentage
+                        </label>
+                        <input type="number" id="student-percentage" name="percentage" min="45.0" max="100.0" step="0.01" placeholder="e.g. 85.50" required>
+                        <span class="helper-text">Enter your aggregate percentage score (e.g. 84.75)</span>
+                    </div>
+
+                    <!-- Category Selector -->
+                    <div class="form-group">
+                        <label for="seat-category">
+                            <i data-lucide="user-check" class="input-icon"></i>
+                            Admission Category
+                        </label>
+                        <div class="select-wrapper">
+                            <select id="seat-category" name="category" required>
+                                <option value="" disabled selected>Select Category</option>
+                                <!-- populated dynamically -->
+                            </select>
+                        </div>
+                        <span class="helper-text">Select your admission seat category</span>
+                    </div>
+
+                    <!-- Academic Year Selector -->
+                    <div class="form-group">
+                        <label for="academic-year">
+                            <i data-lucide="calendar" class="input-icon"></i>
+                            Academic Year
+                        </label>
+                        <div class="select-wrapper">
+                            <select id="academic-year" name="year" required>
+                                <option value="2025-26" selected>2025-26 (Latest)</option>
+                                <option value="2024-25">2024-25</option>
+                                <option value="2023-24">2023-24</option>
+                            </select>
+                        </div>
+                        <span class="helper-text">Select cutoff year for prediction</span>
+                    </div>
+
+                    <!-- CAP Round Selector -->
+                    <div class="form-group">
+                        <label for="cap-round">
+                            <i data-lucide="layers" class="input-icon"></i>
+                            CAP Admission Round
+                        </label>
+                        <div class="select-wrapper">
+                            <select id="cap-round" name="round" required>
+                                <option value="1" selected>CAP Round 1</option>
+                                <option value="2">CAP Round 2</option>
+                                <option value="3">CAP Round 3</option>
+                            </select>
+                        </div>
+                        <span class="helper-text">Select which CAP round cutoff to match</span>
+                    </div>
+
+                    <!-- Branch Selector -->
+                    <div class="form-group">
+                        <label for="branch-selector">
+                            <i data-lucide="git-branch" class="input-icon"></i>
+                            Preferred Engineering Branch
+                        </label>
+                        <div class="select-wrapper">
+                            <select id="branch-selector" name="branch">
+                                <option value="ALL">All Branches</option>
+                                <!-- populated dynamically -->
+                            </select>
+                        </div>
+                        <span class="helper-text">Filter by a specific engineering branch</span>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" id="predict-btn" class="btn btn-primary">
+                        <i data-lucide="sparkles"></i>
+                        <span>Find Best Colleges</span>
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Loading Screen -->
+        <div id="loader" class="loader-container hidden">
+            <div class="spinner"></div>
+            <p>Analyzing cutoffs and matching colleges...</p>
+        </div>
+
+        <!-- Dashboard / Results Section -->
+        <section id="results-section" class="results-section hidden" aria-labelledby="results-title" style="max-width: 1200px; margin: 0 auto;">
+            <div class="results-header">
+                <h2 id="results-title">Recommendations for You</h2>
+                <div class="results-filters">
+                    <div class="search-box">
+                        <i data-lucide="search"></i>
+                        <input type="text" id="college-search" placeholder="Search by college name, code, or city...">
+                    </div>
+                    <button id="download-results-btn" class="btn btn-secondary" title="Download matching college list as CSV">
+                        <i data-lucide="download"></i>
+                        <span>Download CSV</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Overview Cards -->
+            <div class="stats-grid">
+                <div class="stat-card dream">
+                    <div class="stat-icon"><i data-lucide="flame"></i></div>
+                    <div>
+                        <h3>Dream Options</h3>
+                        <p class="stat-count" id="count-dream">0</p>
+                        <span class="stat-desc">Cutoffs slightly above yours (0-2%)</span>
+                    </div>
+                </div>
+                <div class="stat-card match">
+                    <div class="stat-icon"><i data-lucide="check-circle"></i></div>
+                    <div>
+                        <h3>Realistic Matches</h3>
+                        <p class="stat-count" id="count-match">0</p>
+                        <span class="stat-desc">Highly matching cutoffs (0-5% below)</span>
+                    </div>
+                </div>
+                <div class="stat-card safe">
+                    <div class="stat-icon"><i data-lucide="shield-check"></i></div>
+                    <div>
+                        <h3>Safe Admissions</h3>
+                        <p class="stat-count" id="count-safe">0</p>
+                        <span class="stat-desc">Cutoffs more than 5% below</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recommendation Tabs / Groups -->
+            <div class="recommendations-container">
+                <!-- Group 1: Realistic Matches -->
+                <div class="rec-group" id="group-match-section">
+                    <div class="group-header match">
+                        <i data-lucide="check-circle"></i>
+                        <h3>Realistic Matches (Highly Recommended)</h3>
+                        <span class="group-badge" id="badge-match">0</span>
+                    </div>
+                    <div class="college-grid" id="grid-match">
+                        <!-- Cards injected here -->
+                    </div>
+                </div>
+
+                <!-- Group 2: Dream / Aspiring Options -->
+                <div class="rec-group" id="group-dream-section">
+                    <div class="group-header dream">
+                        <i data-lucide="flame"></i>
+                        <h3>Dream & Aspiring Options (Slightly Risky)</h3>
+                        <span class="group-badge" id="badge-dream">0</span>
+                    </div>
+                    <div class="college-grid" id="grid-dream">
+                        <!-- Cards injected here -->
+                    </div>
+                </div>
+
+                <!-- Group 3: Safe Options -->
+                <div class="rec-group" id="group-safe-section">
+                    <div class="group-header safe">
+                        <i data-lucide="shield-check"></i>
+                        <h3>Safe Admission Options (Backups)</h3>
+                        <span class="group-badge" id="badge-safe">0</span>
+                    </div>
+                    <div class="college-grid" id="grid-safe">
+                        <!-- Cards injected here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div id="no-results-msg" class="no-results-card hidden">
+                <i data-lucide="frown"></i>
+                <h3>No Colleges Found</h3>
+                <p>Try broadening your filters, searching for another branch, or checking your percentage score.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Persistence shortlist drawer -->
+    <aside id="shortlist-drawer" class="shortlist-drawer" aria-labelledby="shortlist-title">
+        <div class="drawer-header">
+            <h2 id="shortlist-title">
+                <i data-lucide="bookmark-check"></i>
+                Your Shortlist
+            </h2>
+            <button id="close-drawer-btn" class="icon-btn" aria-label="Close Shortlist">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+        <div class="drawer-content">
+            <p class="drawer-desc">This is your list of favorite options. Use this order when filling out your official CAP Option Form.</p>
+            <div id="shortlist-items" class="shortlist-items-container">
+                <!-- Shortlisted items injected here -->
+                <div class="empty-shortlist">
+                    <i data-lucide="plus-circle"></i>
+                    <p>No colleges shortlisted yet. Click the bookmark icon on college cards to add them here.</p>
+                </div>
+            </div>
+        </div>
+        <div class="drawer-footer">
+            <div class="drawer-actions-row">
+                <button id="clear-shortlist-btn" class="btn btn-secondary">
+                    <i data-lucide="trash-2"></i>
+                    <span>Clear All</span>
+                </button>
+                <button id="print-shortlist-btn" class="btn btn-secondary">
+                    <i data-lucide="printer"></i>
+                    <span>Print</span>
+                </button>
+            </div>
+            <button id="download-shortlist-btn" class="btn btn-primary btn-full-width">
+                <i data-lucide="download"></i>
+                <span>Download Shortlist (CSV)</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Print area helper -->
+    <div id="print-section" class="print-only">
+        <div class="print-header">
+            <h2>DSE 2025 CAP Option Form Preparation Helper</h2>
+            <p>Generated based on Cutoff CAP Round I data. Keep this list handy while filling the choice entry form.</p>
+        </div>
+        <table class="print-table">
+            <thead>
+                <tr>
+                    <th>Preference</th>
+                    <th>College Code</th>
+                    <th>College Name</th>
+                    <th>Choice Code</th>
+                    <th>Course Branch Name</th>
+                    <th>Category Cutoff</th>
+                </tr>
+            </thead>
+            <tbody id="print-table-body">
+                <!-- Print items injected here -->
+            </tbody>
+        </table>
+        <div class="print-footer">
+            <p>Maharashtra State Direct Second Year Admissions 2025-26 Predictor. Developed to assist applicants.</p>
+        </div>
+    </div>
+
+    <footer class="app-footer">
+        <div class="footer-container">
+            <p>&copy; 2025-26 Direct Second Year Engineering Admissions Predictor.</p>
+            <p class="disclaimer"><strong>Important AI Notice & Disclaimer:</strong> All cutoff predictions, recommendations, and statistics shown on this website are generated with the help of AI using historical CAP round datasets. Actual cutoffs for the current academic year may vary depending on candidate choices and seat availability. Please verify all choice codes and cutoff percentages against official CET Cell lists before filling out your final option form.</p>
+        </div>
+    </footer>
+
+    <script src="shared-auth.js"></script>
+    <script src="predictor.js"></script>
+</body>
+</html>

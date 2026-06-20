@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mandatory Documents Checklist - DSE 2025</title>
+    <meta name="description" content="Check category-wise mandatory admission documents, Caste Validity, and Non-Creamy Layer certificate criteria for DSE admissions in Maharashtra.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="glass-bg-glow"></div>
+    
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand" onclick="window.location.href='/'" style="cursor: pointer;">
+                <div class="logo-glow">
+                    <i data-lucide="graduation-cap"></i>
+                </div>
+                <div>
+                    <h1>DSE College Finder</h1>
+                    <p class="subtitle">Direct Second Year Engineering Predictor 2025-26</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <nav class="nav-pills">
+                    <a href="/" class="nav-pill">
+                        <i data-lucide="home"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="/predictor" class="nav-pill">
+                        <i data-lucide="sparkles"></i>
+                        <span>Predictor</span>
+                    </a>
+                    <a href="/fees" class="nav-pill">
+                        <i data-lucide="indian-rupee"></i>
+                        <span>Fees</span>
+                    </a>
+                    <a href="/documents" class="nav-pill active">
+                        <i data-lucide="file-text"></i>
+                        <span>Documents</span>
+                    </a>
+                    <a href="/reviews" class="nav-pill">
+                        <i data-lucide="message-square"></i>
+                        <span>Reviews</span>
+                    </a>
+                </nav>
+                
+                <!-- User Area Menu -->
+                <div id="user-header-menu" class="user-header-menu">
+                    <button id="header-signin-btn" class="btn btn-primary">
+                        <i data-lucide="user"></i>
+                        <span>Sign In</span>
+                    </button>
+                    <div id="header-profile-dropdown" class="header-profile-dropdown hidden">
+                        <button id="profile-trigger-btn" class="profile-trigger">
+                            <span class="user-avatar-initials" id="user-avatar">U</span>
+                            <span class="username-display" id="user-display">Student</span>
+                            <i data-lucide="chevron-down" class="dropdown-chevron"></i>
+                        </button>
+                        <ul class="dropdown-menu-list">
+                            <li id="sync-shortlist-status" class="dropdown-status-info">
+                                <i data-lucide="cloud-lightning"></i>
+                                <span>Guest Session</span>
+                            </li>
+                            <li>
+                                <button id="header-signout-btn" class="dropdown-item">
+                                    <i data-lucide="log-out"></i>
+                                    <span>Sign Out</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="hamburger-btn" aria-label="Open menu">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="app-main animate-fade-in" style="max-width: 1000px; margin: 0 auto; gap: 1.5rem;">
+        <!-- Hero Section -->
+        <section class="hero-section" aria-labelledby="hero-title" style="padding-bottom: 1rem; text-align: center;">
+            <div class="hero-content" style="align-items: center; max-width: 100%;">
+                <div class="hero-badge">
+                    <i data-lucide="file-check-2"></i>
+                    <span>Admissions Verification Checklist</span>
+                </div>
+                <h1 id="hero-title" style="font-size: 2.5rem; line-height: 1.2;">Admissions Documents Guide</h1>
+                <p class="hero-subtitle" style="margin-top: 0.5rem; max-width: 650px;">Select your category to verify the exact certificates and validity constraints required for securing seats and tuition concessions under DTE Maharashtra CAP rounds.</p>
+            </div>
+        </section>
+
+        <!-- Category Selector Row -->
+        <section class="predictor-section Card" style="padding: 1.25rem;">
+            <label style="font-weight: 600; font-size: 0.9rem; color: var(--text-muted); display: block; margin-bottom: 0.75rem; text-align: center;">
+                <i data-lucide="filter" style="width: 14px; height: 14px; display: inline; vertical-align: middle; margin-right: 0.25rem;"></i>
+                Select Your Category to Customize the Checklist
+            </label>
+            <div id="category-tabs-container" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem;">
+                <button class="btn btn-secondary active" data-category="OPEN">OPEN (General)</button>
+                <button class="btn btn-secondary" data-category="OBC">OBC</button>
+                <button class="btn btn-secondary" data-category="EWS">EWS</button>
+                <button class="btn btn-secondary" data-category="SC">SC</button>
+                <button class="btn btn-secondary" data-category="ST">ST</button>
+                <button class="btn btn-secondary" data-category="VJNT">VJ/DT / NT-A/B/C/D</button>
+                <button class="btn btn-secondary" data-category="SBC">SBC</button>
+                <button class="btn btn-secondary" data-category="TFWS">TFWS (Waiver)</button>
+            </div>
+        </section>
+
+        <!-- Main Checklist Area -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; width: 100%; align-items: start;" id="documents-layout-grid">
+            
+            <!-- Checklist Card -->
+            <section class="Card" style="padding: 1.75rem; display: flex; flex-direction: column; gap: 1.25rem;">
+                <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 0.5rem;">
+                    <i data-lucide="clipboard-list" style="color: var(--primary);"></i>
+                    <span id="checklist-title-category">OPEN Category</span> Checklist
+                </h3>
+                
+                <!-- Dynamic Checkboxes -->
+                <div id="documents-checklist-container" style="display: flex; flex-direction: column; gap: 1rem;">
+                    <!-- Checklist items injected dynamically -->
+                </div>
+            </section>
+
+            <!-- Sidebar Info Panel -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <!-- Readiness Meter Card -->
+                <section class="Card" style="padding: 1.5rem; text-align: center; display: flex; flex-direction: column; gap: 1rem; border-top: 4px solid var(--match-color);">
+                    <h3 style="font-size: 1.1rem; font-weight: 600; color: #fff;">Readiness Score</h3>
+                    
+                    <div style="position: relative; width: 100px; height: 100px; margin: 0 auto; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.02); border-radius: 50%; border: 3px dashed var(--card-border);">
+                        <span id="readiness-pct" style="font-size: 1.6rem; font-weight: 700; color: var(--match-color);">0%</span>
+                    </div>
+
+                    <p id="readiness-summary" style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
+                        Select the checkboxes as you verify each document.
+                    </p>
+                </section>
+
+                <!-- Guidelines Card -->
+                <section class="Card" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; background-color: rgba(255,255,255,0.015);">
+                    <h3 style="font-size: 1.1rem; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 0.4rem;">
+                        <i data-lucide="alert-circle" style="color: var(--primary); width: 18px; height: 18px;"></i>
+                        DTE Regulations
+                    </h3>
+                    <ul style="font-size: 0.8rem; color: var(--text-muted); padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.5rem; line-height: 1.45;">
+                        <li><strong>Receipts Allowed:</strong> DTE permits uploading Cast Validity/NCL receipts during initial registration, but original certificates **must be produced** at the reporting center (ARC) to confirm the admission.</li>
+                        <li><strong>NCL Expiry Date:</strong> Non-Creamy Layer certificates must be valid up to **March 31, 2026**. Older validity ranges will be rejected.</li>
+                        <li><strong>Income Limits:</strong> State scholarship concessions require Income Certificate issued by Tahsildar for family income **≤ ₹8 Lakhs**.</li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer" style="margin-top: 3rem;">
+        <div class="footer-container">
+            <p>&copy; 2025-26 Direct Second Year Engineering Admissions Predictor.</p>
+            <p class="disclaimer">Disclaimer: All document requirements, guidelines, and calculator parameters shown on this portal represent standard configurations defined by DTE Maharashtra/FRA guidelines. Always verify with official DTE admission brochures and college guidelines prior to submitting official application forms.</p>
+        </div>
+    </footer>
+
+    <script src="shared-auth.js"></script>
+    <script src="documents.js"></script>
+</body>
+</html>

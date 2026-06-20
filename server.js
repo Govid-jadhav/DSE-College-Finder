@@ -649,6 +649,21 @@ app.get('/college-fees-details', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'college-details.html'));
 });
 
+// Route to serve predictor.html
+app.get('/predictor', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'predictor.html'));
+});
+
+// Route to serve documents.html
+app.get('/documents', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'documents.html'));
+});
+
+// Route to serve reviews.html
+app.get('/reviews', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'reviews.html'));
+});
+
 // Route to serve admin.html
 app.get('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'admin.html'));
