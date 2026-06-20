@@ -1651,7 +1651,10 @@ function renderReviewsList(reviews) {
     
     loadedReviews = reviews;
     
+    const avgRatingBadge = document.getElementById('average-reviews-rating');
+    
     if (!reviews || reviews.length === 0) {
+        if (avgRatingBadge) avgRatingBadge.classList.add('hidden');
         emptyReviewsMsg.classList.remove('hidden');
         reviewsList.classList.add('hidden');
         return;
@@ -1659,6 +1662,23 @@ function renderReviewsList(reviews) {
     
     emptyReviewsMsg.classList.add('hidden');
     reviewsList.classList.remove('hidden');
+    
+    // Calculate Average Rating
+    if (avgRatingBadge) {
+        const totalRating = reviews.reduce((sum, r) => sum + r.rating, 0);
+        const avgRating = (totalRating / reviews.length).toFixed(1);
+        
+        const avgRatingVal = document.getElementById('avg-rating-value');
+        const totalReviewsCount = document.getElementById('total-reviews-count');
+        const avgRatingStars = document.getElementById('avg-rating-stars');
+        
+        if (avgRatingVal) avgRatingVal.textContent = avgRating;
+        if (totalReviewsCount) totalReviewsCount.textContent = `(${reviews.length} review${reviews.length > 1 ? 's' : ''})`;
+        if (avgRatingStars) {
+            avgRatingStars.innerHTML = '<i data-lucide="star" style="width: 18px; height: 18px; fill: currentColor; margin-right: 0.1rem;"></i>';
+        }
+        avgRatingBadge.classList.remove('hidden');
+    }
     
     reviews.forEach(review => {
         const initials = review.username.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
