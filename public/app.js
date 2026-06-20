@@ -1709,7 +1709,7 @@ function renderReviewsList(reviews) {
                         <i data-lucide="edit-3" style="width: 14px; height: 14px;"></i>
                         <span>Edit</span>
                     </button>
-                    <button class="delete-btn" onclick="deleteReview('${review._id}')" style="background: none; border: none; color: hsl(352, 90%, 65%); cursor: pointer; font-size: 0.8rem; display: flex; align-items: center; gap: 0.25rem; padding: 0.25rem 0.5rem; border-radius: 4px; transition: var(--transition);">
+                    <button class="delete-btn" disabled style="background: none; border: none; color: var(--text-muted); cursor: not-allowed; opacity: 0.5; font-size: 0.8rem; display: flex; align-items: center; gap: 0.25rem; padding: 0.25rem 0.5rem; border-radius: 4px; transition: var(--transition);" title="Review deletion is disabled">
                         <i data-lucide="trash-2" style="width: 14px; height: 14px;"></i>
                         <span>Delete</span>
                     </button>
@@ -1825,9 +1825,10 @@ window.cancelEditReview = function() {
     if (reviewErrorMsg) reviewErrorMsg.classList.add('hidden');
 };
 
-// Delete review
+// Delete review (Disabled)
 window.deleteReview = async function(id) {
-    if (!confirm('Are you sure you want to delete your review?')) return;
+    alert('Deleting reviews has been disabled.');
+    return;
     
     try {
         const response = await fetch(`/api/reviews/${id}`, {
