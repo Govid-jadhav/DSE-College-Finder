@@ -167,6 +167,13 @@ function hasUserReviewed() {
     return loadedReviews.some(r => r.userId && r.userId.toString() === uid.toString());
 }
 
+// Check if review posting is compulsory for the current user
+function isReviewCompulsory() {
+    if (!window.token || !window.currentUser) return true;
+    if (hasUserReviewed()) return false;
+    return sessionStorage.getItem('newly_logged_in') === 'true';
+}
+
 // Update locking notification display
 function updatePredictorLockStatus() {
     const lockMsg = document.getElementById('predictor-lock-msg');
@@ -190,7 +197,7 @@ function updatePredictorLockStatus() {
             });
         }
         lucide.createIcons();
-    } else if (!hasUserReviewed()) {
+    } else if (isReviewCompulsory()) {
         lockMsg.innerHTML = `
             <i data-lucide="lock" style="flex-shrink: 0; color: #ef4444; width: 20px; height: 20px;"></i>
             <div style="text-align: left; font-size: 0.9rem; line-height: 1.4;">
@@ -258,7 +265,7 @@ function handlePredict(e) {
         return;
     }
     
-    if (!hasUserReviewed()) {
+    if (isReviewCompulsory()) {
         updatePredictorLockStatus();
         window.location.href = "/reviews";
         return;

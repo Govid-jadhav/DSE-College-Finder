@@ -253,6 +253,7 @@ async function handleReviewSubmit(e) {
         const data = await response.json();
         
         if (response.ok) {
+            sessionStorage.removeItem('newly_logged_in');
             window.cancelEditReview();
             window.location.href = '/predictor?show_shortlist_info=true';
         } else {

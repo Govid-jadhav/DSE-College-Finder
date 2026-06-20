@@ -52,6 +52,7 @@ window.handleSignout = function() {
     window.currentUser = null;
     localStorage.removeItem('dse_auth_token');
     localStorage.removeItem('dse_shortlisted_codes');
+    sessionStorage.removeItem('newly_logged_in');
     window.shortlistedColleges = [];
     
     updateHeaderUI();
@@ -500,6 +501,7 @@ async function handleLoginSubmit(e) {
         const data = await response.json();
         
         if (response.ok) {
+            sessionStorage.setItem('newly_logged_in', 'true');
             window.token = data.token;
             window.currentUser = data.user;
             localStorage.setItem('dse_auth_token', window.token);
@@ -573,6 +575,7 @@ async function handleSignupSubmit(e) {
         const data = await response.json();
         
         if (response.ok) {
+            sessionStorage.setItem('newly_logged_in', 'true');
             window.token = data.token;
             window.currentUser = data.user;
             localStorage.setItem('dse_auth_token', window.token);
