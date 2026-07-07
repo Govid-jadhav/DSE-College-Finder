@@ -1,5 +1,7 @@
 # DSE College Finder 🎓
 > **Direct Second Year (DSE) Engineering Admissions Predictor & Helper Portal 2025-26**
+>
+> 🌐 **Live Application**: [https://dse-college-finder.onrender.com](https://dse-college-finder.onrender.com)
 
 DSE College Finder is a comprehensive web portal designed for engineering diploma holders and B.Sc. graduates in Maharashtra, India. The application simplifies the Direct Second Year (lateral entry) Centralized Admission Process (CAP) conducted by DTE Maharashtra. It helps students predict matching engineering colleges based on diploma scores, search and calculate caste-category fees, verify mandatory documents, and generate option entry choice code shortlists.
 
@@ -29,58 +31,6 @@ DSE College Finder is a comprehensive web portal designed for engineering diplom
 *   **Frontend**: HTML5, Vanilla JavaScript, CSS3 (Modern, clean SaaS-style dark neutral UI with Inter typography, 8px spacing grid, and flat border alignments)
 *   **Icons & Charts**: Lucide Icons, Chart.js (Dashboard statistics visualizer)
 *   **Data Scrapers**: Python 3, PyPDF2 / pdfplumber (for cutoff extraction)
-
----
-
-## 📁 Directory Structure
-
-```text
-├── public/                    # Frontend assets & views
-│   ├── index.html             # Landing Page & FAQ
-│   ├── predictor.html         # Score Matcher UI
-│   ├── fees.html              # College Fees Directory & Concession Receipts
-│   ├── documents.html         # Mandatory Certificates Checklist
-│   ├── reviews.html           # Star Ratings & Aspirant Comments Page
-│   ├── admin.html             # Secure Control Panel Dashboard
-│   ├── college-details.html   # College Fee breakdown sheet
-│   ├── index.css              # Unified SaaS Theme Stylesheet
-│   ├── app.js                 # Global client interactions
-│   ├── shared-auth.js         # Authentication, signup, login, password reset OTP
-│   ├── college_fees_data.json # Seeding data for college fees database
-│   └── dse_cutoff_data.json   # Scraped database containing historical cutoffs
-│
-├── scripts/                   # Data scrapers & pdf parsers
-│   ├── parse_all_pdfs.py      # Extracts cutoffs from raw DTE CAP round PDFs
-│   ├── generate_fees.py       # Compiles fee registries
-│   └── download_pdf.py        # Automates downloading DTE cutoff sheets
-│
-├── pdf/                       # Cache directory for official DTE PDF publications
-├── server.js                  # Express API Server & Database routes
-├── .env                       # Environment credentials configurator
-├── package.json               # Package dependencies & run definitions
-└── README.md                  # System instruction sheet
-```
-
----
-
-## ⚙️ Environment Variables (`.env`)
-
-Create a `.env` file in the root directory and add the following configurations:
-
-```env
-PORT=8080
-MONGODB_URI=mongodb://127.0.0.1:27017/dse_predictor
-JWT_SECRET=your_super_secret_jwt_key_2026
-
-# Email Gateway Setup (fallback console logging if left blank)
-# Gmail Gateway Config:
-EMAIL_USER=your_gmail@gmail.com
-EMAIL_PASS=your_app_password
-
-# OR Brevo SMTP Gateway Config (Primary):
-BREVO_SMTP_USER=your_brevo_smtp_user
-BREVO_SMTP_KEY=your_brevo_smtp_key
-```
 
 ---
 
