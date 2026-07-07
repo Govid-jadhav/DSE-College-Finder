@@ -81,14 +81,3 @@ If you have new CET Cell DSE cutoff PDFs and want to update the JSON databases:
     ```
     This script parses the choice codes, branches, seat categories, and merit list cutoffs, updating `public/dse_cutoff_data.json`.
 
----
-
-## 🛡️ Admin Dashboard Secret Code
-*   To register as an administrator account, sign up through the login modal and provide the default admin confirmation code:
-    `dse_admin_secret_2026`
-*   Once signed in, access the admin panel at: **[http://localhost:8080/admin](http://localhost:8080/admin)**
-
----
-
-## 📜 License
-This project is licensed under the ISC License.
