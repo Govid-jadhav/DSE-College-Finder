@@ -91,11 +91,11 @@
             <div class="hero-content">
                 <div class="hero-badge">
                     <i data-lucide="sparkles"></i>
-                    <span>Direct Second Year Engineering Admissions Portal</span>
+                    <span>100% Free Direct Second Year Engineering Admissions Portal</span>
                 </div>
                 <h1 id="hero-title">Navigate Your DSE Admission Journey</h1>
                 <p class="hero-subtitle">Simplify your admission planning. Predict matching engineering colleges based on diploma scores, analyze category fee structures, verify certificate deadlines, and compile preference codes.</p>
-                <div class="hero-actions-container">
+                <div class="hero-actions-container" style="margin-bottom: 0.5rem;">
                     <a href="/predictor" class="btn btn-primary btn-lg" style="text-decoration: none;">
                         <span>Predict Colleges Now</span>
                         <i data-lucide="sparkles"></i>
@@ -104,6 +104,10 @@
                         <span>Explore Features</span>
                     </a>
                 </div>
+                <span style="font-size: 0.8rem; color: var(--match-color); font-weight: 600; display: inline-flex; align-items: center; gap: 0.35rem; justify-content: center;">
+                    <i data-lucide="circle-check" style="width: 14px; height: 14px;"></i>
+                    100% Free & Unlimited Access
+                </span>
             </div>
             
             <div class="hero-stats">
@@ -252,51 +256,78 @@
         <section style="display: flex; flex-direction: column; gap: 1.5rem; max-width: 800px; margin: 0 auto; width: 100%;">
             <h2 class="section-title">Frequently Asked Questions</h2>
             
-            <div style="display: flex; flex-direction: column; gap: 1rem;">
-                <div class="Card" style="padding: 1.25rem;">
-                    <strong style="color: #fff; font-size: 0.95rem; display: block; margin-bottom: 0.4rem;">What is Direct Second Year (DSE) Admission?</strong>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.45;">It is a lateral entry admission system in Maharashtra allowing engineering diploma holders and B.Sc. graduates to join directly in the 3rd semester (2nd year) of undergraduate Bachelor of Engineering (B.E./B.Tech) courses.</p>
-                </div>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <details class="Card faq-item">
+                    <summary style="font-size: 0.95rem; font-weight: 600; color: #fff; display: flex; justify-content: space-between; align-items: center;">
+                        <span>What is Direct Second Year (DSE) Admission?</span>
+                        <span class="faq-arrow" style="transition: var(--transition); font-size: 0.75rem; color: var(--text-muted);">&#9660;</span>
+                    </summary>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.45; margin-top: 0.5rem; cursor: default;">It is a lateral entry admission system in Maharashtra allowing engineering diploma holders and B.Sc. graduates to join directly in the 3rd semester (2nd year) of undergraduate Bachelor of Engineering (B.E./B.Tech) courses.</p>
+                </details>
                 
-                <div class="Card" style="padding: 1.25rem;">
-                    <strong style="color: #fff; font-size: 0.95rem; display: block; margin-bottom: 0.4rem;">What does Dream, Match, and Safe categories mean?</strong>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.45;">Dream options represent colleges with cutoffs 0-2% higher than your score (highly competitive). Match options are realistic matches within 0-5% below your score. Safe options have cutoffs more than 5% below your score (high seat probability).</p>
-                </div>
+                <details class="Card faq-item">
+                    <summary style="font-size: 0.95rem; font-weight: 600; color: #fff; display: flex; justify-content: space-between; align-items: center;">
+                        <span>What does Dream, Match, and Safe categories mean?</span>
+                        <span class="faq-arrow" style="transition: var(--transition); font-size: 0.75rem; color: var(--text-muted);">&#9660;</span>
+                    </summary>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.45; margin-top: 0.5rem; cursor: default;">Dream options represent colleges with cutoffs 0-2% higher than your score (highly competitive). Match options are realistic matches within 0-5% below your score. Safe options have cutoffs more than 5% below your score (high seat probability).</p>
+                </details>
                 
-                <div class="Card" style="padding: 1.25rem;">
-                    <strong style="color: #fff; font-size: 0.95rem; display: block; margin-bottom: 0.4rem;">Why does the predictor say "Locked"?</strong>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.45;">To unlock recommendations, you must sign in to save your shortlist and submit a short rating/feedback review on the reviews page. This helps maintain community guidelines and gathers feedback to refine prediction algorithms.</p>
-                </div>
+                <details class="Card faq-item">
+                    <summary style="font-size: 0.95rem; font-weight: 600; color: #fff; display: flex; justify-content: space-between; align-items: center;">
+                        <span>Why does the predictor say "Locked"?</span>
+                        <span class="faq-arrow" style="transition: var(--transition); font-size: 0.75rem; color: var(--text-muted);">&#9660;</span>
+                    </summary>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.45; margin-top: 0.5rem; cursor: default;">To unlock recommendations, you must sign in to save your shortlist and submit a short rating/feedback review on the reviews page. This helps maintain community guidelines and gathers feedback to refine prediction algorithms.</p>
+                </details>
+                
+                <details class="Card faq-item">
+                    <summary style="font-size: 0.95rem; font-weight: 600; color: #fff; display: flex; justify-content: space-between; align-items: center;">
+                        <span>What is the Tuition Fee Waiver Scheme (TFWS) and am I eligible?</span>
+                        <span class="faq-arrow" style="transition: var(--transition); font-size: 0.75rem; color: var(--text-muted);">&#9660;</span>
+                    </summary>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.45; margin-top: 0.5rem; cursor: default;">TFWS provides 100% waiver of tuition fees for students. To be eligible, your annual family income must be strictly less than ₹8 Lakhs from all sources, and you must apply specifically for TFWS seats during the CAP registration.</p>
+                </details>
 
-                <div class="Card" style="padding: 1.25rem;">
-                    <strong style="color: #fff; font-size: 0.95rem; display: block; margin-bottom: 0.4rem;">What is the Tuition Fee Waiver Scheme (TFWS) and am I eligible?</strong>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.45;">TFWS provides 100% waiver of tuition fees for students. To be eligible, your annual family income must be strictly less than ₹8 Lakhs from all sources, and you must apply specifically for TFWS seats during the CAP registration.</p>
-                </div>
+                <details class="Card faq-item">
+                    <summary style="font-size: 0.95rem; font-weight: 600; color: #fff; display: flex; justify-content: space-between; align-items: center;">
+                        <span>How is the aggregate diploma percentage calculated for DSE merit numbers?</span>
+                        <span class="faq-arrow" style="transition: var(--transition); font-size: 0.75rem; color: var(--text-muted);">&#9660;</span>
+                    </summary>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.45; margin-top: 0.5rem; cursor: default;">The aggregate percentage is calculated based on the marks obtained in the final year (usually the 5th and 6th semesters) of your diploma program, as defined by MSBTE or your respective autonomous board.</p>
+                </details>
 
-                <div class="Card" style="padding: 1.25rem;">
-                    <strong style="color: #fff; font-size: 0.95rem; display: block; margin-bottom: 0.4rem;">How is the aggregate diploma percentage calculated for DSE merit numbers?</strong>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.45;">The aggregate percentage is calculated based on the marks obtained in the final year (usually the 5th and 6th semesters) of your diploma program, as defined by MSBTE or your respective autonomous board.</p>
-                </div>
+                <details class="Card faq-item">
+                    <summary style="font-size: 0.95rem; font-weight: 600; color: #fff; display: flex; justify-content: space-between; align-items: center;">
+                        <span>Can I change my engineering branch during Direct Second Year admission?</span>
+                        <span class="faq-arrow" style="transition: var(--transition); font-size: 0.75rem; color: var(--text-muted);">&#9660;</span>
+                    </summary>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.45; margin-top: 0.5rem; cursor: default;">Yes, students can change their engineering branch (e.g. from Mechanical Diploma to Computer Engineering degree) subject to branch-eligibility rules specified by the DTE and seat availability.</p>
+                </details>
 
-                <div class="Card" style="padding: 1.25rem;">
-                    <strong style="color: #fff; font-size: 0.95rem; display: block; margin-bottom: 0.4rem;">Can I change my engineering branch during Direct Second Year admission?</strong>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.45;">Yes, students can change their engineering branch (e.g. from Mechanical Diploma to Computer Engineering degree) subject to branch-eligibility rules specified by the DTE and seat availability.</p>
-                </div>
+                <details class="Card faq-item">
+                    <summary style="font-size: 0.95rem; font-weight: 600; color: #fff; display: flex; justify-content: space-between; align-items: center;">
+                        <span>Is a Caste Validity Certificate mandatory at the time of option entry?</span>
+                        <span class="faq-arrow" style="transition: var(--transition); font-size: 0.75rem; color: var(--text-muted);">&#9660;</span>
+                    </summary>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.45; margin-top: 0.5rem; cursor: default;">Yes, the Caste Validity Certificate is mandatory. While DTE may allow uploads of confirmation receipts during registration, the final original certificate must be presented at the Admission Reporting Center (ARC) to secure admission under reservation.</p>
+                </details>
 
-                <div class="Card" style="padding: 1.25rem;">
-                    <strong style="color: #fff; font-size: 0.95rem; display: block; margin-bottom: 0.4rem;">Is a Caste Validity Certificate mandatory at the time of option entry?</strong>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.45;">Yes, the Caste Validity Certificate is mandatory. While DTE may allow uploads of confirmation receipts during registration, the final original certificate must be presented at the Admission Reporting Center (ARC) to secure admission under reservation.</p>
-                </div>
+                <details class="Card faq-item">
+                    <summary style="font-size: 0.95rem; font-weight: 600; color: #fff; display: flex; justify-content: space-between; align-items: center;">
+                        <span>What is the difference between Freeze, Float, and Slide options?</span>
+                        <span class="faq-arrow" style="transition: var(--transition); font-size: 0.75rem; color: var(--text-muted);">&#9660;</span>
+                    </summary>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.45; margin-top: 0.5rem; cursor: default;">"Freeze" accepts the allotted seat and locks it (no further CAP round participation). "Float" accepts the seat but keeps options open for better choices in subsequent rounds. "Slide" accepts the seat but only looks for better branches within the same college.</p>
+                </details>
 
-                <div class="Card" style="padding: 1.25rem;">
-                    <strong style="color: #fff; font-size: 0.95rem; display: block; margin-bottom: 0.4rem;">What is the difference between Freeze, Float, and Slide options?</strong>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.45;">"Freeze" accepts the allotted seat and locks it (no further CAP round participation). "Float" accepts the seat but keeps options open for better choices in subsequent rounds. "Slide" accepts the seat but only looks for better branches within the same college.</p>
-                </div>
-
-                <div class="Card" style="padding: 1.25rem;">
-                    <strong style="color: #fff; font-size: 0.95rem; display: block; margin-bottom: 0.4rem;">What are Minority Seats and who can claim them?</strong>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.45;">Minority seats are reserved in specific colleges for linguistic (e.g., Hindi, Sindhi, Gujarati) or religious (e.g., Muslim, Christian, Sikh) minorities. Candidates belonging to these groups must select their minority category during DTE registration to qualify.</p>
-                </div>
+                <details class="Card faq-item">
+                    <summary style="font-size: 0.95rem; font-weight: 600; color: #fff; display: flex; justify-content: space-between; align-items: center;">
+                        <span>What are Minority Seats and who can claim them?</span>
+                        <span class="faq-arrow" style="transition: var(--transition); font-size: 0.75rem; color: var(--text-muted);">&#9660;</span>
+                    </summary>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.45; margin-top: 0.5rem; cursor: default;">Minority seats are reserved in specific colleges for linguistic (e.g., Hindi, Sindhi, Gujarati) or religious (e.g., Muslim, Christian, Sikh) minorities. Candidates belonging to these groups must select their minority category during DTE registration to qualify.</p>
+                </details>
             </div>
         </section>
     </main>

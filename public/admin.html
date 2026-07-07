@@ -34,12 +34,12 @@
         }
         
         .admin-sidebar {
-            background-color: hsla(223, 47%, 9%, 0.8);
+            background-color: var(--surface-color);
             border-right: 1px solid var(--card-border);
-            padding: 2rem 1.5rem;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 1.5rem;
             position: sticky;
             top: 0;
             height: 100vh;
@@ -57,11 +57,11 @@
             background: none;
             border: none;
             color: var(--text-muted);
-            padding: 0.85rem 1rem;
+            padding: 0.625rem 1rem;
             border-radius: var(--radius-md);
             font-family: var(--font-heading);
-            font-weight: 600;
-            font-size: 0.95rem;
+            font-weight: 500;
+            font-size: 0.875rem;
             text-align: left;
             cursor: pointer;
             display: flex;
@@ -71,14 +71,14 @@
         }
         
         .sidebar-item button:hover {
-            background-color: rgba(255,255,255,0.03);
+            background-color: rgba(255,255,255,0.05);
             color: #fff;
         }
         
         .sidebar-item.active button {
-            background-color: var(--secondary);
-            color: var(--primary-hover);
-            border: 1px solid var(--card-border);
+            background-color: var(--primary);
+            color: #ffffff;
+            border: 1px solid var(--primary);
         }
         
         .admin-content {

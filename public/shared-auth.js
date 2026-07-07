@@ -693,8 +693,8 @@ function showWelcomePopup(username) {
     overlay.style.left = '0';
     overlay.style.width = '100vw';
     overlay.style.height = '100vh';
-    overlay.style.backgroundColor = 'rgba(6, 9, 22, 0.85)';
-    overlay.style.backdropFilter = 'blur(10px)';
+    overlay.style.backgroundColor = 'rgba(6, 9, 22, 0.8)';
+    overlay.style.backdropFilter = 'blur(4px)';
     overlay.style.display = 'flex';
     overlay.style.alignItems = 'center';
     overlay.style.justifyContent = 'center';
@@ -704,36 +704,36 @@ function showWelcomePopup(username) {
     
     const card = document.createElement('div');
     card.className = 'Card';
-    card.style.maxWidth = '460px';
+    card.style.maxWidth = '440px';
     card.style.width = '100%';
-    card.style.padding = '2.5rem';
+    card.style.padding = '1.5rem';
     card.style.display = 'flex';
     card.style.flexDirection = 'column';
-    card.style.gap = '1.5rem';
+    card.style.gap = '1rem';
     card.style.position = 'relative';
     card.style.textAlign = 'center';
-    card.style.border = '1px solid hsla(250, 89%, 65%, 0.3)';
-    card.style.boxShadow = '0 20px 50px rgba(100, 50, 255, 0.2)';
+    card.style.border = '1px solid var(--card-border)';
+    card.style.boxShadow = 'var(--shadow-lg)';
     
     card.innerHTML = `
-        <div style="background: linear-gradient(135deg, var(--primary), var(--dream-color)); width: 60px; height: 60px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; margin: 0 auto; color: white; box-shadow: 0 0 20px rgba(100, 50, 255, 0.4);">
-            <i data-lucide="sparkles" style="width: 30px; height: 30px;"></i>
+        <div style="background: var(--primary); width: 48px; height: 48px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; margin: 0 auto; color: white;">
+            <i data-lucide="sparkles" style="width: 24px; height: 24px;"></i>
         </div>
         <div>
-            <h3 style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem;">Welcome, ${firstName}!</h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Here is a quick guide to help you find the best colleges:</p>
+            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">Welcome, ${firstName}!</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.4;">Here is a quick guide to help you find the best colleges:</p>
         </div>
         
-        <div style="display: flex; flex-direction: column; gap: 1rem; text-align: left; background: rgba(255,255,255,0.02); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--card-border);">
+        <div style="display: flex; flex-direction: column; gap: 0.75rem; text-align: left; background: rgba(30, 41, 59, 0.3); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--card-border);">
             <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-                <div style="color: var(--primary-hover); margin-top: 0.15rem;"><i data-lucide="bookmark-check" style="width: 18px; height: 18px;"></i></div>
+                <div style="color: var(--primary-hover); margin-top: 0.15rem;"><i data-lucide="bookmark-check" style="width: 16px; height: 16px;"></i></div>
                 <div>
                     <strong style="color: #fff; font-size: 0.85rem;">Shortlist Your Choices</strong>
                     <p style="color: var(--text-muted); font-size: 0.75rem; margin-top: 0.1rem;">Click the bookmark icon on any college recommendation card to add it to your shortlist.</p>
                 </div>
             </div>
             <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-                <div style="color: var(--match-color); margin-top: 0.15rem;"><i data-lucide="download" style="width: 18px; height: 18px;"></i></div>
+                <div style="color: var(--match-color); margin-top: 0.15rem;"><i data-lucide="download" style="width: 16px; height: 16px;"></i></div>
                 <div>
                     <strong style="color: #fff; font-size: 0.85rem;">Download PDF & Excel</strong>
                     <p style="color: var(--text-muted); font-size: 0.75rem; margin-top: 0.1rem;">Open the Shortlist panel at the top right to download your list as an Excel sheet (CSV) or print a PDF helper.</p>
@@ -741,7 +741,7 @@ function showWelcomePopup(username) {
             </div>
         </div>
         
-        <button id="welcome-popup-close-btn" class="btn btn-primary" style="width: 100%; padding: 0.85rem;">
+        <button id="welcome-popup-close-btn" class="btn btn-primary" style="width: 100%; padding: 0.625rem;">
             <span>Get Started</span>
             <i data-lucide="arrow-right"></i>
         </button>
